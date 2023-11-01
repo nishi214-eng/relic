@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block main %}
+<table>
+    <tr>
+        <td class="td_style1">
+                <a href="">
+                <img src="../static/logo/220_20220326204201.png" width="400" hight="200" alt="bloom">
+                </a>
+        </td>
+        <td class="td_style2">
+            <h5>
+                <span class="char1">画像をアップロードしてピンを立てる</span>
+            </h5>
+            <form method="POST" enctype = "multipart/form-data">                
+                <input type=file name=file>
+                <input type=submit value=送信>
+                <span style="color:red">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }}">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </span>
+            </form>
+        <td class="td_style3">
+            <p><br>アップロードできる画像形式：png、jpg、jpeg<br>
+               ※位置情報の含まれた画像を使用してください
+            </p>
+        </td>
+    </tr>
+</table>
+<div id="mapid"></div>
+<script type="text/javascript">
+    var tf = {{ Up | tojson }}; //グローバル変数として定義する。
+    var POSES = {{ poses | tojson }}
+    var LonTxt = document.getElementById("lon")
+
+    alert(place)
+    alert(POSES.length)
+</script>
+
+<script src="../static/js/map.js"></script>
+
+<!--script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script-->
+
+<!--script type="text/javascript">;
+
+    if (tf == 1) {
+        place.push({ "lat": String(GPSlat), "long": String(GPSlon)})
+    } 
+
+    alert(place)
+</script-->
+
+<!--
+<p id="test">初めてのJavaScript勉強中だよ！</p>
+
+<script>
+    var elem = document.getElementById("test");
+    elem.innerText = "innerText";
+</script>
+-->
+
+<p id = "lat"></p>
+<p id = "lon"></p>
+{% endblock %}
