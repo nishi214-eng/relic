@@ -1,0 +1,69 @@
+#mapid { height: 500px; }
+
+.char1 { font-size:132%; }
+
+.char2 { font-weight:normal; }
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width:100%;
+	border-collapse: separate;
+	border-spacing: 10px;
+        table-layout: fixed;
+        white-space: nowrap;
+}
+
+.td_style1{
+        float:center;
+	width:40%;
+	color:#000000;
+	vertical-align:top;
+	border-radius: 10px;
+}
+
+.td_style2{
+        float:center;
+        text-align:center;
+	width:30%;
+	color:#000000;
+	vertical-align:top;
+	border-radius: 10px;
+}
+
+.td_style3{
+        float:center;
+        text-align:center;
+	width:30%;
+	color:#000000;
+	vertical-align:top;
+	border-radius: 10px;
+}
+
+h1 {
+	position: relative;
+	background: #dfefff;
+	box-shadow: 0px 0px 0px 5px #dfefff;
+	border: dashed 2px white;
+	padding: 0.2em 0.5em;
+	color: #454545;
+   }
+   
+   h1:after {
+	   position: absolute;
+	   content: '';
+	   left: -7px;
+	   top:  -7px;
+	   border-width: 0 0 15px 15px;
+	   border-style: solid;
+	   border-color: #fff  #fff #a8d4ff;
+	   box-shadow: 1px 1px 1px rqba(0, 0, 0, 0.15);
+   }
+   
+   table {
+	   background-color: #cdefff;  /* 背景色指定 */
+   }
+	
+   th {
+	   background-color: #00e2cf;  /* 背景色指定 */
+   }
