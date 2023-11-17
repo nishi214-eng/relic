@@ -1,42 +1,60 @@
-#mapid { height: 500px; }
+@font-face {
+	font-family: 'MyFont';
+	src: url('../static/font/keifont.ttf') format('truetype');
+}
 
-.char1 { font-size:132%; }
+html,
+body {
+	height: 100%;
+	margin: 0;
+	font-family: 'MyFont', sans-serif;
+}
 
-.char2 { font-weight:normal; }
+#mapid {
+	height: 100%;
+}
+
+.char1 {
+	font-size: 132%;
+}
+
+.char2 {
+	font-weight: normal;
+}
 
 table {
 	margin-left: auto;
 	margin-right: auto;
-	width:100%;
+	width: 100%;
 	border-collapse: separate;
 	border-spacing: 10px;
-        table-layout: fixed;
-        white-space: nowrap;
+	table-layout: fixed;
+	white-space: nowrap;
 }
 
-.td_style1{
-        float:center;
-	width:40%;
-	color:#000000;
-	vertical-align:top;
+.td_style1 {
+	float: center;
+	width: 40%;
+	color: #000000;
+	vertical-align: top;
 	border-radius: 10px;
 }
 
-.td_style2{
-        float:center;
-        text-align:center;
-	width:30%;
-	color:#000000;
-	vertical-align:top;
+.td_style2 {
+	float: center;
+	text-align: center;
+	width: 30%;
+	color: #000000;
+	vertical-align: top;
 	border-radius: 10px;
 }
 
-.td_style3{
-        float:center;
-        text-align:center;
-	width:30%;
-	color:#000000;
-	vertical-align:top;
+.td_style3 {
+	float: center;
+	text-align: center;
+	width: 30%;
+	color: #000000;
+	vertical-align: top;
 	border-radius: 10px;
 }
 
@@ -47,23 +65,448 @@ h1 {
 	border: dashed 2px white;
 	padding: 0.2em 0.5em;
 	color: #454545;
-   }
-   
-   h1:after {
-	   position: absolute;
-	   content: '';
-	   left: -7px;
-	   top:  -7px;
-	   border-width: 0 0 15px 15px;
-	   border-style: solid;
-	   border-color: #fff  #fff #a8d4ff;
-	   box-shadow: 1px 1px 1px rqba(0, 0, 0, 0.15);
-   }
-   
-   table {
-	   background-color: #cdefff;  /* 背景色指定 */
-   }
-	
-   th {
-	   background-color: #00e2cf;  /* 背景色指定 */
-   }
+}
+
+h1:after {
+	position: absolute;
+	content: '';
+	left: -7px;
+	top: -7px;
+	border-width: 0 0 15px 15px;
+	border-style: solid;
+	border-color: #fff #fff #ffffff00;
+	box-shadow: 1px 1px 1px rqba(0, 0, 0, 0.15);
+}
+
+table {
+	background-color: #cdefff;
+	/* 背景色指定 */
+}
+
+th {
+	background-color: #00e2cf;
+	/* 背景色指定 */
+}
+
+
+
+body {
+	background-color: #EDEDED;
+	margin: 0;
+	font-family: MyFont;
+}
+
+
+#title {
+	float: left;
+	position: fixed;
+	top: 3%;
+	left: 3%;
+}
+
+#search-bar {
+	position: fixed;
+	top: 3%;
+	left: 20%;
+	width: 60%;
+	padding: 1em;
+	float: left;
+	text-align: center;
+}
+
+#search-form {
+	position: relative;
+}
+
+#sbox {
+	outline: 0;
+	height: 50px;
+	padding: 0 10px;
+	float: left;
+	left: 0;
+	top: 0;
+	width: 100%;
+	background: #ffffff;
+	border-radius: 10px;
+	border: 2px solid rgb(0, 0, 0);
+	resize: none;
+}
+
+
+#sbtn {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	float: left;
+	margin-left: 5px;
+	top: 0;
+	background: #7fbfff;
+	color: #fff;
+	font-weight: bold;
+	font-size: 16px;
+	border: none;
+	border-radius: 10px;
+}
+
+#sbtn:hover {
+	background: #eee;
+	color: #7fbfff;
+}
+
+
+.circular-menu {
+	position: fixed;
+	top: 1em;
+	right: 1em;
+	float: left;
+}
+
+
+
+.circular-menu .floating-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 5em;
+	height: 5em;
+	border: none;
+	border-radius: 50%;
+	background-color: hsl(0, 0%, 100%);
+	box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, .26);
+	color: hsl(0, 0%, 0%);
+	text-align: center;
+	cursor: pointer;
+	outline: 0;
+}
+
+.circular-menu .floating-btn button {
+	background: none;
+	border: none;
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+.circular-menu button {
+	background: white;
+	border: none;
+	font-size: 1.5em;
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.circular-menu button:hover {
+	opacity: 0.8;
+}
+
+.circular-menu.active .floating-btn {
+	box-shadow: inset 0 0 3px hsla(0, 0%, 0%, .3);
+}
+
+.circular-menu .floating-btn:active {
+	box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, .4);
+}
+
+.circular-menu .floating-btn i {
+	font-size: 1.3em;
+	transition: transform .2s;
+}
+
+.circular-menu.active .floating-btn i {
+	transform: rotate(-45deg);
+}
+
+.circular-menu .items-wrapper {
+	padding: 0;
+	margin: 0;
+}
+
+.circular-menu .menu-item {
+	position: absolute;
+	top: .3em;
+	right: .3em;
+	z-index: -1;
+	display: block;
+	text-decoration: none;
+	color: hsl(0, 0%, 6%);
+	font-size: 1em;
+	width: 4em;
+	height: 4em;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 3;
+	background-color: hsla(0, 0%, 0%, .1);
+	transition: transform .3s ease, background .2s ease;
+}
+
+.circular-menu .menu-item:hover {
+	background-color: hsla(0, 0%, 0%, .3);
+}
+
+.circular-menu.active .menu-item:nth-child(1) {
+	transform: translate3d(1em, 7em, 0);
+}
+
+.circular-menu.active .menu-item:nth-child(2) {
+	transform: translate3d(-3.5em, 6.3em, 0);
+}
+
+.circular-menu.active .menu-item:nth-child(3) {
+	transform: translate3d(-7em, 3.2em, 0);
+}
+
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	display: none;
+	width: 25%;
+	background-color: #ffffff;
+	overflow-x: hidden;
+	padding-bottom: 60px;
+	transition: width 0.5s;
+	border-radius: 5%;
+}
+
+
+.sidebar a:hover {
+	opacity: 0.7;
+}
+
+.sidebar .closebtn {
+	float: left;
+	margin-top: 5%;
+	font-size: 45px;
+	margin-left: 80%;
+	width: 100%;
+}
+
+.sidebar p {
+	float: left;
+	font-size: 25px;
+	width: 80%;
+	margin-left: 10%;
+	color: rgb(37, 37, 37);
+}
+
+/*.sidebar i{
+    float: left;
+    width: 20%;
+    height: auto;
+    margin-left: 10%;
+    color: aqua;
+  }*/
+
+
+.sidebar .sideimg {
+	display: flex;
+	flex-wrap: wrap;
+	float: left;
+	justify-content: space-between;
+	width: 80%;
+	margin-left: 10%;
+
+}
+
+.sidebar .sideimg img {
+	width: calc(33.33% - 8px);
+	/* 10pxは間隔として適切な値に調整してください */
+	margin-bottom: 10px;
+}
+
+#remarks {
+	margin-bottom: 10px;
+}
+
+.remarks textarea {
+	margin-left: 10%;
+	float: left;
+	width: 80%;
+	height: 20%;
+	background: #ffffff;
+	border: 2px solid rgb(0, 0, 0);
+	box-shadow: none;
+	border-radius: 5px;
+	padding: 5px 5px 5px 5px;
+	margin-bottom: 5%;
+	resize: none;
+}
+
+.remarks img {
+	border-radius: 50%;
+	width: 50%;
+	margin-left: 25%;
+	margin-bottom: 8%;
+}
+
+.cp_iptxt {
+
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 5%;
+}
+
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 80%;
+	padding: 0.3em;
+	letter-spacing: 1px;
+	border: 0;
+}
+
+.cp_iptxt input[type='text']:focus {
+	outline: none;
+}
+
+.cp_iptxt input[type='text']:focus::after {
+	outline: none;
+}
+
+.cp_iptxt i {
+	top: 0;
+	left: 0;
+	font-size: 25px;
+	padding: 5px 9px;
+	transition: 0.3s;
+	color: #000000;
+}
+
+.cp_iptxt::after {
+	display: block;
+	width: 100%;
+	height: 4px;
+	margin-top: -1px;
+	content: '';
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+
+
+#calculator .element {
+	padding: 3px 20px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+}
+
+.element[data-element="file_upload01"]>label:before,
+.element[data-element="file_upload02"]>label:before {
+	content: '';
+	background: url("..static/ico/folder-open-solid.svg");
+	width: 25px;
+	height: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	display: inline-block;
+	top: 3px;
+	position: relative;
+	margin-right: 5px;
+}
+
+#calculator .element[data-element="file_upload01"] label,
+#calculator .element[data-element="file_upload02"] label {
+	display: block !important;
+	font-size: 0 !important;
+}
+
+.element[data-element="file_upload01"]>label,
+.element[data-element="file_upload02"]>label {
+	display: none;
+	font-size: 32px;
+	text-align: center;
+	cursor: pointer;
+	color: #000000 !important;
+	border: 2px solid #000000;
+	border-radius: 5%;
+}
+
+.element[data-element="file_upload01"]>label:after,
+.element[data-element="file_upload02"]>label:after {
+	content: 'ファイルを選択';
+	font-size: 18px;
+	font-family: Arial, sans-serif;
+}
+
+#calculator .element[data-element="file_upload01"] label,
+#calculator .element[data-element="file_upload02"] label {
+	width: 90%;
+}
+
+.element[data-element="file_upload01"]>label,
+.element[data-element="file_upload02"]>label {
+	background: #fff;
+	padding: 5px 0;
+}
+
+
+
+#fileName01,
+#fileName02 {
+	width: 100%;
+	text-align: center;
+}
+
+.element[data-element="file_upload01"],
+.element[data-element="file_upload02"] {
+	flex-flow: column;
+	margin-bottom: 0 !important;
+	padding-top: 10px !important;
+}
+
+textarea.calc-prop[name="properties[サイズ内訳]"] {
+	min-height: 140px;
+}
+
+.element strong {
+	font-weight: bold;
+}
+
+.element[data-element="file_format"] {
+	margin: 10px 20px;
+}
+
+.element[data-element="file_upload01"],
+.element[data-element="file_upload02"] {
+	position: relative;
+}
+
+.element[data-element="file_format"] {
+	border: 1px solid #ADADAD;
+	padding: 0 20px 20px !important;
+	margin: 20px;
+	width: calc(100% - 40px) !important;
+}
+
+.element[data-element="file_format"] label,
+.element[data-element="attention_file_upload"] label {
+	width: 100% !important;
+}
+
+input#fileinput.calc-prop[name="properties[file_upload01]"],
+input#fileinput.calc-prop[name="properties[file_upload02]"] {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	left: 0;
+	letter-spacing: 22px;
+}
+
+@media screen and (max-width: 1024px) {
+	.element[data-element="file_format"] {
+		margin: 20px;
+		width: calc(100% - 40px) !important;
+	}
+
+	#calculator .element[data-element="file_upload01"] label,
+	#calculator .element[data-element="file_upload02"] label {
+		width: 100% !important;
+		margin: 5px 0 !important;
+	}
+}

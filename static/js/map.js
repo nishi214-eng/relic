@@ -26,7 +26,7 @@ var place = [];
 
 //alert(POSES[0]["lat"])
 for (var i = 0; i < POSES.length; i++) {
-  place.push({"lat": String(POSES[i]["lat"]), "long": String(POSES[i]["long"])})
+  place.push({ "lat": String(POSES[i]["lat"]), "long": String(POSES[i]["long"]) })
 }
 
 var PincIco = L.icon({
@@ -39,10 +39,10 @@ var PincIco = L.icon({
 
 // GeoJSON形式で複数個のマーカーを設定する
 for (var i = 0; i < place.length; i++) {
-  features.push({ 
+  features.push({
     "type": "Feature",
     "properties": {
-      "icon":PincIco
+      "icon": PincIco
       //"name": place[i].name
     },
     "geometry": {
@@ -53,30 +53,30 @@ for (var i = 0; i < place.length; i++) {
 }
 
 L.geoJson(features, {
-  onEachFeature: function(features, layer) {
+  onEachFeature: function (features, layer) {
     if (features.properties && features.properties.name) {
       layer.bindPopup(features.properties.name);
-      layer.on('mouseover', function(e) {
+      layer.on('mouseover', function (e) {
         this.openPopup();
       });
-      layer.on('mouseout', function(e) {
+      layer.on('mouseout', function (e) {
         this.closePopup();
       });
-      layer.on('click', function(e) {
+      layer.on('click', function (e) {
         alert('ここにゴミ捨てるの?');
       });
     }
   },
   // アイコンの指定があれば指定したアイコンを設置する
 
-  pointToLayer: function(feature, latlng) {
-		   // アイコンの指定があれば指定したアイコンを設置する
-		if(feature.properties.icon){
+  pointToLayer: function (feature, latlng) {
+    // アイコンの指定があれば指定したアイコンを設置する
+    if (feature.properties.icon) {
       //alert(1) 1があるためアイコンが指定はされている。
-			return L.marker(latlng, {icon: feature.properties.icon});
-		}else{
+      return L.marker(latlng, { icon: feature.properties.icon });
+    } else {
       //alert(2)
-			return L.marker(latlng);
-		}
-	}
+      return L.marker(latlng);
+    }
+  }
 }).addTo(map);
