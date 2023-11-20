@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'MyFont';
-	src: url('../static/font/keifont.ttf') format('truetype');
+	src: url("../font/keifont.ttf");
 }
 
 html,
@@ -311,10 +311,31 @@ body {
 
 }
 
-.sidebar .sideimg img {
+.sidebar .sideimg label {
 	width: calc(33.33% - 8px);
 	/* 10pxは間隔として適切な値に調整してください */
 	margin-bottom: 10px;
+}
+
+.sidebar .sideimg img {
+	width: 100%;
+	height: auto;
+}
+
+/* ラジオボタンの○を消す */
+input[type="radio"] {
+	display: none;
+}
+
+
+/* 未選択の場合、色を薄くする */
+input[type="radio"]+label img {
+	opacity: 0.2;
+}
+
+/* 選択済みの場合、色を濃くする */
+input[type="radio"]:checked+label img {
+	opacity: 1;
 }
 
 #remarks {
@@ -398,7 +419,7 @@ body {
 .element[data-element="file_upload01"]>label:before,
 .element[data-element="file_upload02"]>label:before {
 	content: '';
-	background: url("..static/ico/folder-open-solid.svg");
+	background: url("../ico/folder-open-solid.svg");
 	width: 25px;
 	height: 25px;
 	background-repeat: no-repeat;

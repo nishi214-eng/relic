@@ -24,9 +24,9 @@ def create_books_table():
     #conは、データベースへ接続するためのオブジェクト(コネクションオブジェクト)
 
     #エラーにならないように IF NOT EXIST を記述する
-    con.execute("CREATE TABLE IF NOT EXISTS Poses (long, lat)") #テーブル作成のSQL文 
+    con.execute("CREATE TABLE IF NOT EXISTS Poses (long, lat, location, content, pin_type, tag_type, remarks)") #テーブル作成のSQL文
     #longが緯度、latが経度
-    con.close() #データベースとの接続を閉じる。 
+    con.close() #データベースとの接続を閉じる。
 
 
 Upload_File = 0
@@ -40,10 +40,10 @@ def upload_file():
 	#そのため、関数内の変数が保持されない。対処法として、global変数を定義する。
 
 	#テーブルを作成
-	create_books_table() 
+	create_books_table()
     #コネクションオブジェクトを作成する。
 	con = sqlite3.connect(DATABESE)
-	DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。) 
+	DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。)
     #SELECTは、SQLテーブルからデータを取得することができる。
     #SELECT * FROM booksは、booksテーブル内の全てのデータを取得するという意味。
 	con.close()
@@ -57,15 +57,22 @@ def upload_file():
 
 
 	if request.method == 'POST':
+		#画像以外のデータをget
+		location = request.form.get('location')
+		content = request.form.get('content')
+		pin_type = request.form.get('pin_type')
+		tag_type = request.form.get('tag_type')
+		remarks = request.form.get('remarks')
+
 		if 'file' not in request.files:
 			flash('No file part', "failed1")
 			return redirect(request.url)
-		
+
 		file = request.files['file']
 		if file.filename == '':
 			flash('No selected file', "failed2")
 			return redirect(request.url)
-		
+
 		if file and allowed_file(file.filename):
 			Upload_File = 1
 			filename = secure_filename(file.filename)
@@ -79,24 +86,24 @@ def upload_file():
 			Lat = round(gpsdata[1], 7)  #経度を四捨五入
 
 			con = sqlite3.connect(DATABESE)
-    
+
             #INSERT INTO テーブル名 VALUES(1列目の値, 2列目の値, 3列目の値)
-            #テーブルにデータを入力する。    
+            #テーブルにデータを入力する。
             #?には順番に下記の変数の値が当てはめられる。
-			con.execute('INSERT INTO Poses VALUES(?, ?)',[Long, Lat])
+			con.execute('INSERT INTO Poses VALUES (?, ?, ?, ?, ?, ?, ?)', [Long, Lat, location, content, pin_type, tag_type, remarks])
 			con.commit() #入力後に実行する関数
-		
-			DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。) 
+
+			DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。)
             #SELECTは、SQLテーブルからデータを取得することができる。
             #SELECT * FROM booksは、booksテーブル内の全てのデータを取得するという意味。
 			con.close()
- 
+
             #辞書として追加されたデータを再取得
 			for row in DB_Poses:
 				Poses.append({'long':row[0], 'lat':row[1]})
-				
+
 			return redirect(request.url)
-        
+
 		#print(Upload_File)
 	#print(Upload_File)
 	return render_template(

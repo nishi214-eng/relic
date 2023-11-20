@@ -15,6 +15,21 @@
 <script src="../static/js/ui,.js"></script>
 <!--script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script-->
 
+<!--<form method="POST" enctype="multipart/form-data">
+    <input type=file name=file>
+    <input type=submit value=送信>
+    <span style="color:red">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </span>
+</form>-->
+
+
 <!--script type="text/javascript">;
 
     if (tf == 1) {
