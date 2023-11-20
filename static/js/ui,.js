@@ -75,57 +75,63 @@ sidebarControl.onAdd = function (map) {
   this.ele.style.zIndex = 1500;
   this.ele.innerHTML = `
     <a class="closebtn" onclick="opencloseSidebar1()">×</a>
-    <p>場所名</p>
-    <div class="cp_iptxt">
-      <i class="fa-solid fa-location-dot"></i><input class="sidebox" type="text" name="location" placeholder="場所名を入力してね！" />
-    </div>
-    <p>コンテンツ</p>
-    <div class="cp_iptxt">
-      <i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />
-    </div>
-    <p>位置情報付きの写真</p>
-    <div id="calculator">
-      <div class="element" data-element="file_upload01" data-conditionalelement="undefined"
-        data-conditionalelementvalue="undefined"><label style="color:#333333">file_upload01</label><input id="fileinput"
-          class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file"
-          name="properties[file_upload01]">
+    <form method="POST" enctype="multipart/form-data">
+      <p>場所名</p>
+      <div class="cp_iptxt">
+        <i class="fa-solid fa-location-dot"></i><input class="sidebox" type="text" name="location" placeholder="場所名を入力してね！" />
       </div>
-    </div>
-    <p>ピンの種類</p>
-    <div class="sideimg">
-      <input id="pinType1" type="radio" value="oshikey.png" name="pinType">
-      <label for="pinType1"><img src="../static/ico/oshikey.png"></label>
-      <input id="pinType2" type="radio" value="goods.png" name="pinType">
-      <label for="pinType2"><img src="../static/ico/goods.png"></label>
-      <input id="pinType3" type="radio" value="place.png" name="pinType">
-      <label for="pinType3"><img src="../static/ico/place.png"></label>
-    </div>
-    <p>タグ</p>
-    <div class="sideimg">
-      <input id="tagType1" type="radio" value="anime.png" name="tagType">
-      <label for="tagType1"><img src="../static/ico/anime.png" alt="アニメ"></label>
+      <p>コンテンツ</p>
+      <div class="cp_iptxt">
+        <i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />
+      </div>
+      <p>位置情報付きの写真</p>
+                <input type=file name=file>
+                <span style="color:red">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p class="{{ category }}">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </span>
+      <p>ピンの種類</p>
+      <div class="sideimg">
+        <input id="pinType1" type="radio" value="oshikey.png" name="pinType">
+        <label for="pinType1"><img src="../static/ico/oshikey.png"></label>
+        <input id="pinType2" type="radio" value="goods.png" name="pinType">
+        <label for="pinType2"><img src="../static/ico/goods.png"></label>
+        <input id="pinType3" type="radio" value="place.png" name="pinType">
+        <label for="pinType3"><img src="../static/ico/place.png"></label>
+      </div>
+      <p>タグ</p>
+      <div class="sideimg">
+        <input id="tagType1" type="radio" value="anime.png" name="tagType">
+        <label for="tagType1"><img src="../static/ico/anime.png" alt="アニメ"></label>
 
-      <input id="tagType2" type="radio" value="manga.png" name="tagType">
-      <label for="tagType2"><img src="../static/ico/manga.png" alt="漫画"></label>
+        <input id="tagType2" type="radio" value="manga.png" name="tagType">
+        <label for="tagType2"><img src="../static/ico/manga.png" alt="漫画"></label>
 
-      <input id="tagType3" type="radio" value="manga.png" name="tagType">
-      <label for="tagType3"><img src="../static/ico/test.png" alt="小説"></label>
+        <input id="tagType3" type="radio" value="manga.png" name="tagType">
+        <label for="tagType3"><img src="../static/ico/test.png" alt="小説"></label>
 
-      <input id="tagType4" type="radio" value="manga.png" name="tagType">
-      <label for="tagType4"><img src="../static/ico/test.png" alt="映画"></label>
+        <input id="tagType4" type="radio" value="manga.png" name="tagType">
+        <label for="tagType4"><img src="../static/ico/test.png" alt="映画"></label>
 
-      <input id="tagType5" type="radio" value="manga.png" name="tagType">
-      <label for="tagType5"><img src="../static/ico/test.png" alt="ドラマ"></label>
+        <input id="tagType5" type="radio" value="manga.png" name="tagType">
+        <label for="tagType5"><img src="../static/ico/test.png" alt="ドラマ"></label>
 
-      <input id="tagType6" type="radio" value="manga.png" name="tagType">
-      <label for="tagType6"><img src="../static/ico/test.png" alt="その他"></label>
+        <input id="tagType6" type="radio" value="manga.png" name="tagType">
+        <label for="tagType6"><img src="../static/ico/test.png" alt="その他"></label>
 
-    </div>
-    <div class="remarks">
-      <p>備考</p>
-      <textarea type="text" name="remarks" placeholder="例：3月末に撤去予定です"></textarea>
-      <button onclick="submitData()">送信</button>
-    </div>`;
+      </div>
+      <div class="remarks">
+        <p>備考</p>
+        <textarea type="text" name="remarks" placeholder="例：3月末に撤去予定です"></textarea>
+        <input type="submit" value="送信">
+
+      </div>
+    </form>`;
 
   return this.ele;
 };
@@ -201,12 +207,3 @@ $('input').change(function () {
   $('#fileName01').html(file01.name + ' (' + bytesToSize(file01.size) + ')');
   $('#fileName02').html(file02.name + ' (' + bytesToSize(file02.size) + ')');
 });
-
-function submitData() {
-  // 入力値の取得
-  var locationValue = document.getElementById("locationInput").value;
-  var contentValue = document.getElementById("contentInput").value;
-  var remarksValue = document.getElementById("remarksInput").value;
-
-  //POSTリクエスト
-}

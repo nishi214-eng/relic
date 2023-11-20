@@ -24,7 +24,8 @@ def create_books_table():
     #conは、データベースへ接続するためのオブジェクト(コネクションオブジェクト)
 
     #エラーにならないように IF NOT EXIST を記述する
-    con.execute("CREATE TABLE IF NOT EXISTS Poses (long, lat, location, content, pin_type, tag_type, remarks)") #テーブル作成のSQL文
+    con.execute("CREATE TABLE IF NOT EXISTS Poses (long, lat, location, content, pinType, tagType, remarks)") #テーブル作成のSQL文
+    #longが緯度、latが経度
     #longが緯度、latが経度
     con.close() #データベースとの接続を閉じる。
 
@@ -33,84 +34,66 @@ Upload_File = 0
 gpsdata = (0, 0)
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
+    global Upload_File, gpsdata
 
-	global Upload_File, gpsdata #return redirect(request.url)の時に、関数が振り出しに戻る。
-	#そのため、関数内の変数が保持されない。対処法として、global変数を定義する。
+    # テーブルを作成
+    create_books_table()
+    con = sqlite3.connect(DATABESE)
+    DB_Poses = con.execute('SELECT * FROM Poses').fetchall()
+    con.close()
 
-	#テーブルを作成
-	create_books_table()
-    #コネクションオブジェクトを作成する。
-	con = sqlite3.connect(DATABESE)
-	DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。)
-    #SELECTは、SQLテーブルからデータを取得することができる。
-    #SELECT * FROM booksは、booksテーブル内の全てのデータを取得するという意味。
-	con.close()
+    Poses = []
+    for row in DB_Poses:
+        Poses.append({'lat': row[0], 'long': row[1]})
 
-    #python側でデータを作る。
-    #1つの辞書に設定
-	Poses = []
-    #辞書として取得
-	for row in DB_Poses:
-		Poses.append({'lat':row[0], 'long':row[1]})
+    if request.method == 'POST':
+        # フォームからデータを取得
+        location = request.form['location']
+        content = request.form['content']
+        pinType = request.form['pinType']
+        tagType = request.form['tagType']
+        remarks = request.form['remarks']
+        # 以下、GPSデータの取得とデータベースへの挿入
+        if 'file' not in request.files:
+            flash('No file part', "failed1")
+            return redirect(request.url)
 
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', "failed2")
+            return redirect(request.url)
 
-	if request.method == 'POST':
-		#画像以外のデータをget
-		location = request.form.get('location')
-		content = request.form.get('content')
-		pin_type = request.form.get('pin_type')
-		tag_type = request.form.get('tag_type')
-		remarks = request.form.get('remarks')
+        if file and allowed_file(file.filename):
+            Upload_File = 1
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            fname = './static/img/' + filename
+            gpsdata = gps_info.get_gps(fname)
+            print(f"GPS Data: {gpsdata}")
 
-		if 'file' not in request.files:
-			flash('No file part', "failed1")
-			return redirect(request.url)
+            Long = round(gpsdata[0], 7)
+            Lat = round(gpsdata[1], 7)
 
-		file = request.files['file']
-		if file.filename == '':
-			flash('No selected file', "failed2")
-			return redirect(request.url)
+            con = sqlite3.connect(DATABESE)
+            con.execute('INSERT INTO Poses VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        [Long, Lat, location, content, pinType, tagType, remarks])
+            con.commit()
 
-		if file and allowed_file(file.filename):
-			Upload_File = 1
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			fname = './static/img/' + filename
-			gpsdata = gps_info.get_gps(fname)
-			#print(round(gpsdata[0], 7)) #小数点以下第8位を四捨五入する。
-			#print(round(gpsdata[1], 7)) #小数点以下第8位を四捨五入する。
-			#print(Upload_File)
-			Long = round(gpsdata[0], 7) #緯度を四捨五入
-			Lat = round(gpsdata[1], 7)  #経度を四捨五入
+            DB_Poses = con.execute('SELECT * FROM Poses').fetchall()
+            con.close()
 
-			con = sqlite3.connect(DATABESE)
+            for row in DB_Poses:
+                Poses.append({'long': row[0], 'lat': row[1]})
 
-            #INSERT INTO テーブル名 VALUES(1列目の値, 2列目の値, 3列目の値)
-            #テーブルにデータを入力する。
-            #?には順番に下記の変数の値が当てはめられる。
-			con.execute('INSERT INTO Poses VALUES (?, ?, ?, ?, ?, ?, ?)', [Long, Lat, location, content, pin_type, tag_type, remarks])
-			con.commit() #入力後に実行する関数
+            return redirect(request.url)
 
-			DB_Poses = con.execute('SELECT * FROM Poses').fetchall() #fetchallでpythonのlistオブジェクトとして取得することができる(1行が1つのタプルになっている。)
-            #SELECTは、SQLテーブルからデータを取得することができる。
-            #SELECT * FROM booksは、booksテーブル内の全てのデータを取得するという意味。
-			con.close()
-
-            #辞書として追加されたデータを再取得
-			for row in DB_Poses:
-				Poses.append({'long':row[0], 'lat':row[1]})
-
-			return redirect(request.url)
-
-		#print(Upload_File)
-	#print(Upload_File)
-	return render_template(
-		'index.html',
-		poses = Poses, #緯度と経度を辞書の形で送信する。
-		Up = Upload_File #Uploadできたかどうか
-	)
+    return render_template(
+        'index.html',
+        poses=Poses,
+        Up=Upload_File
+    )
 
 
 
