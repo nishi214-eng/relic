@@ -46,7 +46,7 @@ def upload_file():
 
     Poses = []
     for row in DB_Poses:
-        Poses.append({'lat': row[0], 'long': row[1]})
+        Poses.append({'lat': row[0], 'long': row[1],'location': row[2], 'content': row[3],'pinType': row[4], 'tagType': row[5],'remarks': row[6]})
 
     if request.method == 'POST':
         # フォームからデータを取得
@@ -85,7 +85,7 @@ def upload_file():
             con.close()
 
             for row in DB_Poses:
-                Poses.append({'long': row[0], 'lat': row[1]})
+                Poses.append({'lat': row[0], 'long': row[1],'location': row[2], 'content': row[3],'pinType': row[4], 'tagType': row[5],'remarks': row[6]})
 
             return redirect(request.url)
 
