@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'MyFont';
-	src: url("../font/keifont.ttf");
+	src: url('../font/keifont.ttf') format('truetype');
 }
 
 html,
@@ -12,59 +12,6 @@ body {
 
 #mapid {
 	height: 100%;
-}
-
-.char1 {
-	font-size: 132%;
-}
-
-.char2 {
-	font-weight: normal;
-}
-
-table {
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 10px;
-	table-layout: fixed;
-	white-space: nowrap;
-}
-
-.td_style1 {
-	float: center;
-	width: 40%;
-	color: #000000;
-	vertical-align: top;
-	border-radius: 10px;
-}
-
-.td_style2 {
-	float: center;
-	text-align: center;
-	width: 30%;
-	color: #000000;
-	vertical-align: top;
-	border-radius: 10px;
-}
-
-.td_style3 {
-	float: center;
-	text-align: center;
-	width: 30%;
-	color: #000000;
-	vertical-align: top;
-	border-radius: 10px;
-}
-
-h1 {
-	position: relative;
-	background: #dfefff;
-	box-shadow: 0px 0px 0px 5px #dfefff;
-	border: dashed 2px white;
-	padding: 0.2em 0.5em;
-	color: #454545;
 }
 
 h1:after {
@@ -88,20 +35,17 @@ th {
 	/* 背景色指定 */
 }
 
-
-
 body {
 	background-color: #EDEDED;
 	margin: 0;
 	font-family: MyFont;
 }
 
-
 #title {
 	float: left;
 	position: fixed;
-	top: 3%;
-	left: 3%;
+	top: 1%;
+	left: 1%;
 }
 
 #search-bar {
@@ -132,7 +76,6 @@ body {
 	resize: none;
 }
 
-
 #sbtn {
 	width: 50px;
 	height: 50px;
@@ -153,15 +96,12 @@ body {
 	color: #7fbfff;
 }
 
-
 .circular-menu {
 	position: fixed;
 	top: 1em;
 	right: 1em;
 	float: left;
 }
-
-
 
 .circular-menu .floating-btn {
 	display: flex;
@@ -256,7 +196,6 @@ body {
 	transform: translate3d(-7em, 3.2em, 0);
 }
 
-
 .sidebar {
 	position: fixed;
 	top: 0;
@@ -270,7 +209,6 @@ body {
 	transition: width 0.5s;
 	border-radius: 5%;
 }
-
 
 .sidebar a:hover {
 	opacity: 0.7;
@@ -290,6 +228,7 @@ body {
 	width: 80%;
 	margin-left: 10%;
 	color: rgb(37, 37, 37);
+	font-family: 'MyFont', sans-serif;
 }
 
 /*.sidebar i{
@@ -299,8 +238,6 @@ body {
     margin-left: 10%;
     color: aqua;
   }*/
-
-
 .sidebar .sideimg {
 	display: flex;
 	flex-wrap: wrap;
@@ -364,7 +301,6 @@ input[type="radio"]:checked+label img {
 }
 
 .cp_iptxt {
-
 	width: 80%;
 	margin-left: 10%;
 	margin-bottom: 5%;
@@ -406,8 +342,6 @@ input[type="radio"]:checked+label img {
 	border-style: solid;
 	border-color: #000000;
 }
-
-
 
 #calculator .element {
 	padding: 3px 20px;
@@ -466,8 +400,6 @@ input[type="radio"]:checked+label img {
 	padding: 5px 0;
 }
 
-
-
 #fileName01,
 #fileName02 {
 	width: 100%;
@@ -481,7 +413,7 @@ input[type="radio"]:checked+label img {
 	padding-top: 10px !important;
 }
 
-textarea.calc-prop[name="properties[サイズ内訳]"] {
+textarea.calc-prop[name="file"] {
 	min-height: 140px;
 }
 
@@ -510,8 +442,8 @@ textarea.calc-prop[name="properties[サイズ内訳]"] {
 	width: 100% !important;
 }
 
-input#fileinput.calc-prop[name="properties[file_upload01]"],
-input#fileinput.calc-prop[name="properties[file_upload02]"] {
+input#fileinput.calc-prop[name="file"],
+input#fileinput.calc-prop[name="file"] {
 	position: absolute;
 	opacity: 0;
 	cursor: pointer;

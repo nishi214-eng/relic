@@ -55,6 +55,11 @@ def upload_file():
         pinType = request.form['pinType']
         tagType = request.form['tagType']
         remarks = request.form['remarks']
+        print(location)
+        print(content)
+        print(pinType)
+        print(tagType)
+        print(remarks)
         # 以下、GPSデータの取得とデータベースへの挿入
         if 'file' not in request.files:
             flash('No file part', "failed1")

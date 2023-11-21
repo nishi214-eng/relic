@@ -10,7 +10,7 @@ var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 tileLayer.addTo(map);
 
 
-// Control OSM Geocoder
+// Control OSM Geocode+
 var option = {
   position: 'topright',
   text: '検索',
@@ -28,10 +28,10 @@ var place = [];
 for (var i = 0; i < POSES.length; i++) {
   place.push({ "lat": String(POSES[i]["lat"]), "long": String(POSES[i]["long"]) })
 }
-
+//アイコンを
 var PincIco = L.icon({
-  iconUrl: '../static/ico/pinkpin.png',
-  iconRetinaUrl: '../static/ico/pinkpin.png',
+  iconUrl: '../static/ico/${selectedPinType}.png',
+  iconRetinaUrl: '../static/ico/${selectedPinType}.png',
   iconSize: [40, 60],
   iconAnchor: [25, 50],
   popupAnchor: [0, -50],
@@ -42,7 +42,7 @@ for (var i = 0; i < place.length; i++) {
   features.push({
     "type": "Feature",
     "properties": {
-      "icon": PincIco
+      "icon": getPinIcon(POSES[i]["pinType"]),
       //"name": place[i].name
     },
     "geometry": {
@@ -50,6 +50,35 @@ for (var i = 0; i < place.length; i++) {
       "coordinates": [place[i].long, place[i].lat]
     }
   });
+}
+
+function getPinIcon(pinType) {
+  // ピンタイプに基づいてアイコンのURLを返す
+  if (pinType === 'oshikey.png') {
+    return L.icon({
+      iconUrl: '../static/ico/oshikey.png',
+      iconRetinaUrl: '../static/ico/oshikey.png',
+      iconSize: [73.7, 135],
+      iconAnchor: [60, 120],
+      popupAnchor: [60, 120],
+    });
+  } else if (pinType === 'goods.png') {
+    return L.icon({
+      iconUrl: '../static/ico/goods.png',
+      iconRetinaUrl: '../static/ico/goods.png',
+      iconSize: [73.7, 135],
+      iconAnchor: [60, 120],
+      popupAnchor: [60, 120],
+    });
+  } else if (pinType === 'place.png') {
+    return L.icon({
+      iconUrl: '../static/ico/place.png',
+      iconRetinaUrl: '../static/ico/place.png',
+      iconSize: [73.7, 135],
+      iconAnchor: [60, 120],
+      popupAnchor: [60, 120],
+    });
+  }
 }
 
 L.geoJson(features, {

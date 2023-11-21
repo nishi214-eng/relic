@@ -4,7 +4,7 @@ titleControl.onAdd = function (map) {
   this.ele = L.DomUtil.create("div", "title-control");
   this.ele.id = "title";
   this.ele.className = "title-Logo";
-  this.ele.innerHTML = "<img src='../static/logo/220_20220326204201.png' width='20%' height='auto' alt='title_logo'>";
+  this.ele.innerHTML = "<img src='../static/logo/logo2.png' width='20%' height='auto' alt='title_logo'>";
   return this.ele;
 };
 
@@ -85,16 +85,11 @@ sidebarControl.onAdd = function (map) {
         <i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />
       </div>
       <p>位置情報付きの写真</p>
-                <input type=file name=file>
-                <span style="color:red">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <p class="{{ category }}">{{ message }}</p>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                </span>
+      <div id="calculator">
+        <div class="element" data-element="file_upload01" data-conditionalelement="undefined"
+          data-conditionalelementvalue="undefined"><label style="color:#333333">file_upload01</label><input id="fileinput" class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file" name="file">
+        </div>
+      </div>
       <p>ピンの種類</p>
       <div class="sideimg">
         <input id="pinType1" type="radio" value="oshikey.png" name="pinType">
@@ -112,24 +107,23 @@ sidebarControl.onAdd = function (map) {
         <input id="tagType2" type="radio" value="manga.png" name="tagType">
         <label for="tagType2"><img src="../static/ico/manga.png" alt="漫画"></label>
 
-        <input id="tagType3" type="radio" value="manga.png" name="tagType">
-        <label for="tagType3"><img src="../static/ico/test.png" alt="小説"></label>
+        <input id="tagType3" type="radio" value="novel.png" name="tagType">
+        <label for="tagType3"><img src="../static/ico/novel.png" alt="小説"></label>
 
-        <input id="tagType4" type="radio" value="manga.png" name="tagType">
-        <label for="tagType4"><img src="../static/ico/test.png" alt="映画"></label>
+        <input id="tagType4" type="radio" value="film.png" name="tagType">
+        <label for="tagType4"><img src="../static/ico/film.png" alt="映画"></label>
 
-        <input id="tagType5" type="radio" value="manga.png" name="tagType">
-        <label for="tagType5"><img src="../static/ico/test.png" alt="ドラマ"></label>
+        <input id="tagType5" type="radio" value="drama.png" name="tagType">
+        <label for="tagType5"><img src="../static/ico/drama.png" alt="ドラマ"></label>
 
-        <input id="tagType6" type="radio" value="manga.png" name="tagType">
-        <label for="tagType6"><img src="../static/ico/test.png" alt="その他"></label>
+        <input id="tagType6" type="radio" value="other.png" name="tagType">
+        <label for="tagType6"><img src="../static/ico/other.png" alt="その他"></label>
 
       </div>
       <div class="remarks">
         <p>備考</p>
         <textarea type="text" name="remarks" placeholder="例：3月末に撤去予定です"></textarea>
         <input type="submit" value="送信">
-
       </div>
     </form>`;
 
