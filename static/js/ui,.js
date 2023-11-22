@@ -99,22 +99,24 @@ sidebarControl.onAdd = function (map) {
   this.ele.style.zIndex = 1500;
   this.ele.innerHTML = `
     <a class="closebtn" onclick="opencloseSidebar1()">×</a>
-    <form method="POST" enctype="multipart/form-data">
-      <p>場所名</p>
+    <form method="POST" enctype="multipart/form-data" onsubmit="return requiredRadio()">
+    <p><span class="required">*</span>は必須項目です</p>
+    <p>場所名 <span class="required">*</span></p>
       <div class="cp_iptxt">
         <i class="fa-solid fa-location-dot"></i><input class="sidebox" type="text" name="location" placeholder="場所名を入力してね！" />
       </div>
-      <p>コンテンツ</p>
+      <p>コンテンツ <span class="required">*</span></p>
       <div class="cp_iptxt">
         <i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />
       </div>
-      <p>位置情報付きの写真</p>
+      <p>位置情報付きの写真 <span class="required">*</span></p>
       <div id="calculator">
         <div class="element" data-element="file_upload01" data-conditionalelement="undefined"
-          data-conditionalelementvalue="undefined"><label style="color:#333333">file_upload01</label><input id="fileinput" class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file" name="file">
+          data-conditionalelementvalue="undefined"><label style="color:#333333">file_upload01</label>
+          <input id="fileinput" class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file" name="file" accept=".jpg" onchange="gpsCheck(this)">
         </div>
       </div>
-      <p>ピンの種類</p>
+      <p>ピンの種類 <span class="required">*</span></p>
       <div class="sideimg">
         <input id="pinType1" type="radio" value="oshikey.png" name="pinType">
         <label for="pinType1"><img src="../static/ico/oshikey.png"></label>
@@ -123,7 +125,7 @@ sidebarControl.onAdd = function (map) {
         <input id="pinType3" type="radio" value="place.png" name="pinType">
         <label for="pinType3"><img src="../static/ico/place.png"></label>
       </div>
-      <p>タグ</p>
+      <p>タグ <span class="required">*</span></p>
       <div class="sideimg">
         <input id="tagType1" type="radio" value="anime.png" name="tagType">
         <label for="tagType1"><img src="../static/ico/anime.png" alt="アニメ"></label>
@@ -227,3 +229,96 @@ $('input').change(function () {
     $('#fileName02').html(file02.name + ' (' + bytesToSize(file02.size) + ')');
   }
 });
+
+//サイドバーの各要素を選択必須にする
+function requiredRadio() {
+  var locationInput = document.getElementsByName("location")[0];
+  var contentInput = document.getElementsByName("content")[0];
+  var fileInput = document.getElementById("fileinput");
+  var pinTypes = document.getElementsByName("pinType");
+  var tagTypes = document.getElementsByName("tagType");
+
+  var pinSelected = false;
+  var tagSelected = false;
+
+  if (locationInput.value.trim() === "") {//無入力・空白の場合
+    swal({
+      title: "場所名を入力してね！",
+      icon: "error",
+      button: "OK",
+    });
+    return false;
+  }
+
+  if (contentInput.value.trim() === "") {//無入力・空白の場合
+    swal({
+      title: "コンテンツの名前を入力してね！",
+      icon: "error",
+      button: "OK",
+    });
+    return false;
+  }
+
+  if (!fileInput.files || fileInput.files.length === 0) {
+    swal({
+      title: "位置情報付きの画像を選択してね！",
+      icon: "error",
+      button: "OK",
+    });
+    return false;
+  }
+  //ラジオボタンの選択確認
+  for (var i = 0; i < pinTypes.length; i++) {
+    if (pinTypes[i].checked) {
+      pinSelected = true;
+      break;
+    }
+  }
+
+  for (var i = 0; i < tagTypes.length; i++) {
+    if (tagTypes[i].checked) {
+      tagSelected = true;
+      break;
+    }
+  }
+
+  if (!pinSelected) {
+    swal({
+      title: "ピンの種類を選択してね！",
+      icon: "error",
+      button: "OK",
+    });
+    return false;
+  }
+
+  if (!tagSelected) {
+    swal({
+      title: "タグを選択してね！",
+      icon: "error",
+      button: "OK",
+    });
+    return false;
+  }
+
+  return true;
+}
+
+//画像が入力された際に、位置情報の有無を確認する
+//function gpsCheck(input) {
+// 位置情報の取得
+//var file = input.files[0];
+//var reader = new FileReader();
+
+//reader.onload = function (e) {
+//var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
+//var hasLocationInfo = exif && exif.GPSLatitude && exif.GPSLongitude;
+
+//if (!hasLocationInfo) {
+//swal({
+//title: "画像に位置情報がありません！",
+//icon: "error",
+//button: "OK",
+//});
+//}
+//};
+//}
