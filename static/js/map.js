@@ -1,6 +1,9 @@
 var map = L.map('mapid', {
   center: [35.66572, 139.73100],
   zoom: 17,
+  scrollWheelZoom: false,
+  smoothWheelZoom: true,
+  smoothSensitivity: 1,
 });
 
 var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -8,6 +11,9 @@ var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 });
 
 tileLayer.addTo(map);
+
+// 縮尺表示
+L.control.scale().addTo(map);
 
 var features = [];
 
