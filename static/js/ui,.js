@@ -13,18 +13,42 @@ titleControl.addTo(map);
 
 
 //検索窓
-var searchBarControl = L.control({ position: "topright" });
+var option = {
+  collapsed: false,
+  position: 'topright',
+  text: '',
+  placeholder: '検索したい地名を入力してください。'
+}
+var osmGeocoder = new L.Control.OSMGeocoder(option);
+map.addControl(osmGeocoder);
+// UIの適用
+const searchBar = document.getElementsByClassName("leaflet-control-geocoder")[0];
+const searchFrom = document.getElementsByClassName("leaflet-control-geocoder-form")[0];
+const searchInput = searchFrom.firstElementChild;
+const searchButton = searchFrom.lastElementChild;
+searchBar.id = "search-bar";
+searchBar.style.zIndex = 999;
+searchBar.classList.add("search-bar", "search-bar-control");
+searchFrom.id = "search-form";
+searchInput.id = "sbox";
+searchButton.id = "sbtn";
 
+let searchIco = document.createElement("i");
+searchIco.classList.add("fas", "fa-search");
+searchButton.appendChild(searchIco);
+
+/*
+var searchBarControl = new L.Control.OSMGeocoder(option);
 searchBarControl.onAdd = function (map) {
   this.ele = L.DomUtil.create("div", "search-bar-control");
   this.ele.id = "search-bar";
-  this.ele.className = "search-bar";
+  this.ele.classList.add("search-bar");
   this.ele.innerHTML = "<form id='search-form' action=''><input id='sbox' type='text' placeholder='検索したいキーワードを入力' /><button id='sbtn' type='submit'><i class='fas fa-search'></i></button></form>";
   this.ele.style.zIndex = 999;
   return this.ele;
 };
 
-searchBarControl.addTo(map);
+map.addControl(searchBarControl);*/
 
 //サークルメニュー
 var circularMenuControl = L.control({ position: "topright" });
@@ -196,8 +220,10 @@ function bytesToSize(bytes) {
 }
 
 $('input').change(function () {
-  var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
-  var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
-  $('#fileName01').html(file01.name + ' (' + bytesToSize(file01.size) + ')');
-  $('#fileName02').html(file02.name + ' (' + bytesToSize(file02.size) + ')');
+  if ($(this).attr('id') != "sbox") {
+    var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
+    var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
+    $('#fileName01').html(file01.name + ' (' + bytesToSize(file01.size) + ')');
+    $('#fileName02').html(file02.name + ' (' + bytesToSize(file02.size) + ')');
+  }
 });

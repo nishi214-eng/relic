@@ -9,17 +9,6 @@ var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
 tileLayer.addTo(map);
 
-
-// Control OSM Geocode+
-var option = {
-  position: 'topright',
-  text: '検索',
-  placeholder: '検索条件を入力してください。'
-}
-var osmGeocoder = new L.Control.OSMGeocoder(option);
-map.addControl(osmGeocoder);
-
-
 var features = [];
 
 var place = [];
@@ -59,24 +48,24 @@ function getPinIcon(pinType) {
       iconUrl: '../static/ico/oshikey.png',
       iconRetinaUrl: '../static/ico/oshikey.png',
       iconSize: [73.7, 135],
-      iconAnchor: [60, 120],
-      popupAnchor: [60, 120],
+      iconAnchor: [36.85, 135],
+      popupAnchor: [0, -150],
     });
   } else if (pinType === 'goods.png') {
     return L.icon({
       iconUrl: '../static/ico/goods.png',
       iconRetinaUrl: '../static/ico/goods.png',
       iconSize: [73.7, 135],
-      iconAnchor: [60, 120],
-      popupAnchor: [60, 120],
+      iconAnchor: [36.85, 135],
+      popupAnchor: [0, -150],
     });
   } else if (pinType === 'place.png') {
     return L.icon({
       iconUrl: '../static/ico/place.png',
       iconRetinaUrl: '../static/ico/place.png',
       iconSize: [73.7, 135],
-      iconAnchor: [60, 120],
-      popupAnchor: [60, 120],
+      iconAnchor: [36.85, 135],
+      popupAnchor: [0, -150],
     });
   }
 }
