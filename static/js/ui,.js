@@ -4,26 +4,29 @@ titleControl.onAdd = function (map) {
   this.ele = L.DomUtil.create("div", "title-control");
   this.ele.id = "title";
   this.ele.className = "title-Logo";
-  this.ele.innerHTML = "<img src='../static/logo/logo2.png' width='20%' height='auto' alt='title_logo'>";
+  this.ele.innerHTML =
+    "<img src='../static/logo/logo2.png' width='20%' height='auto' alt='title_logo'>";
   return this.ele;
 };
 
 titleControl.addTo(map);
 
-
-
 //検索窓
 var option = {
   collapsed: false,
-  position: 'topright',
-  text: '',
-  placeholder: '検索したい地名を入力してください。'
-}
+  position: "topright",
+  text: "",
+  placeholder: "検索したい地名を入力してください。",
+};
 var osmGeocoder = new L.Control.OSMGeocoder(option);
 map.addControl(osmGeocoder);
 // UIの適用
-const searchBar = document.getElementsByClassName("leaflet-control-geocoder")[0];
-const searchFrom = document.getElementsByClassName("leaflet-control-geocoder-form")[0];
+const searchBar = document.getElementsByClassName(
+  "leaflet-control-geocoder"
+)[0];
+const searchFrom = document.getElementsByClassName(
+  "leaflet-control-geocoder-form"
+)[0];
 const searchInput = searchFrom.firstElementChild;
 const searchButton = searchFrom.lastElementChild;
 searchBar.id = "search-bar";
@@ -61,7 +64,7 @@ circularMenuControl.onAdd = function (map) {
 
   var floatingBtn = L.DomUtil.create("a", "floating-btn", this.ele);
   floatingBtn.onclick = function () {
-    document.getElementById('circularMenu').classList.toggle('active');
+    document.getElementById("circularMenu").classList.toggle("active");
   };
 
   var customIcon = L.DomUtil.create("button", "", floatingBtn);
@@ -193,8 +196,6 @@ filterSidebarControl.onAdd = function (map) {
 
 filterSidebarControl.addTo(map);
 
-
-
 //以下関数
 function opencloseSidebar1() {
   $("#sidebar1").slideToggle("");
@@ -205,28 +206,28 @@ function opencloseSidebar2() {
 }
 
 $(function () {
-  $('#calculator .element input[type=number]').change(function () {
-    if ($('#calculator .element input[type=number]').val() == 0) {
-      $('.section-product-detail__btn-cart').addClass('active');
+  $("#calculator .element input[type=number]").change(function () {
+    if ($("#calculator .element input[type=number]").val() == 0) {
+      $(".section-product-detail__btn-cart").addClass("active");
     } else {
-      $('.section-product-detail__btn-cart').removeClass('active');
+      $(".section-product-detail__btn-cart").removeClass("active");
     }
   });
 });
 
 function bytesToSize(bytes) {
-  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return '0 Byte';
+  var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  if (bytes == 0) return "0 Byte";
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-$('input').change(function () {
-  if ($(this).attr('id') != "sbox") {
+$("input").change(function () {
+  if ($(this).attr("id") != "sbox") {
     var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
     var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
-    $('#fileName01').html(file01.name + ' (' + bytesToSize(file01.size) + ')');
-    $('#fileName02').html(file02.name + ' (' + bytesToSize(file02.size) + ')');
+    $("#fileName01").html(file01.name + " (" + bytesToSize(file01.size) + ")");
+    $("#fileName02").html(file02.name + " (" + bytesToSize(file02.size) + ")");
   }
 });
 
@@ -241,7 +242,8 @@ function requiredRadio() {
   var pinSelected = false;
   var tagSelected = false;
 
-  if (locationInput.value.trim() === "") {//無入力・空白の場合
+  if (locationInput.value.trim() === "") {
+    //無入力・空白の場合
     swal({
       title: "場所名を入力してね！",
       icon: "error",
@@ -250,7 +252,8 @@ function requiredRadio() {
     return false;
   }
 
-  if (contentInput.value.trim() === "") {//無入力・空白の場合
+  if (contentInput.value.trim() === "") {
+    //無入力・空白の場合
     swal({
       title: "コンテンツの名前を入力してね！",
       icon: "error",
@@ -302,6 +305,188 @@ function requiredRadio() {
 
   return true;
 }
+
+// ヘルプ
+
+const ANIMATION_TIME = 300;
+const OFFSET_TIME = 20;
+
+document.addEventListener("DOMContentLoaded", function () {
+  const accordions = document.querySelectorAll(".details");
+  accordions.forEach((accordion) => {
+    let isAnimating = false; // アニメーション中かどうかを示すフラグ
+
+    const title = accordion.querySelector(".summary");
+    const content = accordion.querySelector(".details-content");
+
+    // タイトルのクリックイベント
+    title.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // アニメーション中はクリックイベントを受け付けない（連打防止）
+      if (isAnimating) return;
+
+      // オープン処理
+      if (!accordion.open) {
+        isAnimating = true; // アニメーション中（オープン時のみでも安定する）
+        accordion.open = true; // コンテンツの高さを取得するためopen属性をセット
+
+        const contentHeight = content.offsetHeight;
+
+        // コンテンツの高さを0に設定して非表示にする
+        content.style.maxHeight = 0;
+
+        // オフセット時間後にアニメーションを開始
+        setTimeout(() => {
+          content.style.maxHeight = `${contentHeight}px`; // コンテンツの高さを元の高さに設定して表示する
+          accordion.classList.add("is-open"); // オープン状態のクラスを追加
+
+          // アニメーション完了後にリセット
+          setTimeout(() => {
+            content.removeAttribute("style");
+            isAnimating = false; // アニメーション解除
+          }, ANIMATION_TIME);
+        }, OFFSET_TIME);
+
+        // クローズ処理
+      } else if (accordion.open) {
+        const contentHeight = content.offsetHeight;
+
+        // コンテンツの高さを元の高さに設定して表示する
+        content.style.maxHeight = `${contentHeight}px`;
+
+        // オフセット時間後にアニメーションを開始
+        setTimeout(() => {
+          content.style.maxHeight = 0; // コンテンツの高さを0に設定して非表示にする
+          accordion.classList.remove("is-open");
+
+          // アニメーション完了後にリセット
+          setTimeout(() => {
+            content.removeAttribute("style");
+            accordion.open = false; // open属性を削除
+          }, ANIMATION_TIME);
+        }, OFFSET_TIME);
+      }
+    });
+
+    // open属性とis-openクラスを同期させるための関数
+    function syncOpenState() {
+      const hasOpenClass = accordion.classList.contains("is-open");
+
+      if (accordion.open && !hasOpenClass) {
+        // open がセット is-open がない時
+        accordion.classList.add("is-open");
+      } else if (!accordion.open && hasOpenClass) {
+        // open が削除 is-open がある時
+        accordion.classList.remove("is-open");
+      }
+    }
+
+    // 初期状態でオープン状態を同期する（クラスのつけ忘れ防止）
+    syncOpenState();
+
+    // ページ内検索で自動開閉した際に同期する
+    accordion.addEventListener("toggle", () => {
+      setTimeout(() => {
+        // クリックした場合にもこのイベントが発生するためクリック時と同様オフセット時間後にオープン状態を同期する
+        syncOpenState();
+      }, OFFSET_TIME);
+    });
+  });
+});
+
+var header = '<h1 class="help-header">ヘルプ</h1>';
+
+var contents = '<div class="wrapper">';
+contents += '<details class="details">';
+contents += '<summary class="summary">地図の操作方法</summary>';
+contents += '<div class="details-content">';
+contents += '<p class="bold"><移動></p>';
+contents += "<p>PC：ドラッグ / 矢印キー<br>スマホ：スワイプ</p>";
+
+contents += '<p class="bold"><ズーム></p>';
+contents +=
+  "<p>PC：スクロール / ＋－ボタン<br>スマホ：2本指スワイプ / ＋－ボタン</p>";
+contents += '<p class="bold"><検索></p>';
+contents +=
+  "<p>1) 検索タブに調べたい地名を入力<br>2) Enterまたは虫眼鏡ボタンを押す</p>";
+contents += '<p class="bold"><ピンの情報表示></p>';
+contents += "<p>説明を見たいピンを押す</p>";
+contents += '<p class="bold"><ピンの追加></p>';
+contents +=
+  "<p>1) ハンバーガーメニューを押す<br>2) ＋ボタンを押す<br>3) 内容を入力して送信<br>詳細は「ピン追加方法」にあります</p>";
+contents += '<p class="bold"><絞り込み></p>';
+contents += "<p>※リリース版限定機能です！</p>";
+contents += "</div>";
+contents += "</details>";
+
+contents += '<details class="details">';
+contents += '<summary class="summary">ピン追加方法</summary>';
+contents += '<div class="details-content">';
+contents +=
+  "<p>1) 場所名、コンテンツ(作品名)を入力<br>2) 位置情報の含まれた画像をアップロード<br>    ※ファイル形式：jpgのみ<br>3) ピンとタグを1つずつ選ぶ<br>4) 任意で説明など備考を入力<br>5) 送信ボタンを押して追加する</p>";
+contents += "</div>";
+contents += "</details>";
+
+contents += '<details class="details">';
+contents += '<summary class="summary">ピンの種類</summary>';
+contents += '<div class="details-content">';
+contents += '<p class="bold"><オシキー></p>';
+contents +=
+  "<p>推しグッズを飾っているなど推し活を促進している場所<br>(実質その他)</p>";
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/oshikey.png" alt="オシキー" /></div>';
+contents += '<p class="bold"><グッズ></p>';
+contents += "<p>アニ〇イトなどグッズを買える場所</p>";
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/goods.png" alt="グッズ" /></div>';
+contents += '<p class="bold"><聖地></p>';
+contents += "<p>巡礼場所</p>";
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/place.png" alt="聖地" /></div>';
+contents += "</div>";
+contents += "</details>";
+
+contents += '<details class="details">';
+contents += '<summary class="summary">タグの種類</summary>';
+contents += '<div class="details-content">';
+contents += '<p class="bold"><アニメ></p>';
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/anime.png" alt="アニメ" /></div>';
+contents += '<p class="bold"><マンガ></p>';
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/manga.png" alt="" /></div>';
+contents += '<p class="bold"><小説></p>';
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/novel.png" alt="" /></div>';
+contents += '<p class="bold"><映画></p>';
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/film.png" alt="" /></div>';
+contents += '<p class="bold"><ドラマ></p>';
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/drama.png" alt="" /></div>';
+contents += '<p class="bold"><その他></p>';
+contents += "<p>音楽、有名人などはこのタグに含まれます</p>";
+contents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/other.png" alt="" /></div>';
+contents += "</div>";
+contents += "</details>";
+contents += "</div>";
+
+var ulElement = document.getElementsByClassName("items-wrapper")[0];
+var questionMenuBtn = ulElement.lastElementChild;
+
+// SlideMenu
+var options = {
+  width: "40%",
+  height: "100%",
+  position: "topright",
+  menuposition: "topright",
+  openid: questionMenuBtn,
+  changeperc: "10",
+  delay: 20,
+};
+L.control.slideMenu(header + contents, options).addTo(map);
 
 //画像が入力された際に、位置情報の有無を確認する
 //function gpsCheck(input) {
