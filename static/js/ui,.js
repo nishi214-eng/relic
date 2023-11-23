@@ -80,9 +80,6 @@ circularMenuControl.onAdd = function (map) {
   menuItem1.id = "addpinbtn";
 
   var menuItem2 = L.DomUtil.create("a", "menu-item", itemsWrapper);
-  menuItem2.onclick = function () {
-    opencloseSidebar2();
-  };
   menuItem2.innerHTML = '<button><i class="fa-solid fa-filter"></i></button>';
   menuItem2.id = "sortbtn";
 
@@ -165,6 +162,7 @@ sidebarControl.onAdd = function (map) {
 sidebarControl.addTo(map);
 
 // 絞り込みサイドバーコントロール
+/*
 var filterSidebarControl = L.control({ position: "topright" });
 
 filterSidebarControl.onAdd = function (map) {
@@ -197,15 +195,11 @@ filterSidebarControl.onAdd = function (map) {
   return this.ele;
 };
 
-filterSidebarControl.addTo(map);
+filterSidebarControl.addTo(map);*/
 
 //以下関数
 function opencloseSidebar1() {
   $("#sidebar1").slideToggle("");
-}
-
-function opencloseSidebar2() {
-  $("#sidebar2").slideToggle("");
 }
 
 $(function () {
@@ -398,83 +392,83 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-var header = '<h1 class="help-header">ヘルプ</h1>';
+var helpheader = '<h1 class="help-header">ヘルプ</h1>';
 
-var contents = '<div class="wrapper">';
-contents += '<details class="details">';
-contents += '<summary class="summary">地図の操作方法</summary>';
-contents += '<div class="details-content">';
-contents += '<p class="bold"><移動></p>';
-contents += "<p>PC：ドラッグ / 矢印キー<br>スマホ：スワイプ</p>";
+var helpcontents = '<div class="wrapper">';
+helpcontents += '<details class="details">';
+helpcontents += '<summary class="summary">地図の操作方法</summary>';
+helpcontents += '<div class="details-content">';
+helpcontents += '<p class="bold"><移動></p>';
+helpcontents += "<p>PC：ドラッグ / 矢印キー<br>スマホ：スワイプ</p>";
 
-contents += '<p class="bold"><ズーム></p>';
-contents +=
+helpcontents += '<p class="bold"><ズーム></p>';
+helpcontents +=
   "<p>PC：スクロール / ＋－ボタン<br>スマホ：2本指スワイプ / ＋－ボタン</p>";
-contents += '<p class="bold"><検索></p>';
-contents +=
+helpcontents += '<p class="bold"><検索></p>';
+helpcontents +=
   "<p>1) 検索タブに調べたい地名を入力<br>2) Enterまたは虫眼鏡ボタンを押す</p>";
-contents += '<p class="bold"><ピンの情報表示></p>';
-contents += "<p>説明を見たいピンを押す</p>";
-contents += '<p class="bold"><ピンの追加></p>';
-contents +=
+helpcontents += '<p class="bold"><ピンの情報表示></p>';
+helpcontents += "<p>説明を見たいピンを押す</p>";
+helpcontents += '<p class="bold"><ピンの追加></p>';
+helpcontents +=
   "<p>1) ハンバーガーメニューを押す<br>2) ＋ボタンを押す<br>3) 内容を入力して送信<br>詳細は「ピン追加方法」にあります</p>";
-contents += '<p class="bold"><絞り込み></p>';
-contents += "<p>※リリース版限定機能です！</p>";
-contents += "</div>";
-contents += "</details>";
+helpcontents += '<p class="bold"><絞り込み></p>';
+helpcontents += "<p>※リリース版限定機能です！</p>";
+helpcontents += "</div>";
+helpcontents += "</details>";
 
-contents += '<details class="details">';
-contents += '<summary class="summary">ピン追加方法</summary>';
-contents += '<div class="details-content">';
-contents +=
+helpcontents += '<details class="details">';
+helpcontents += '<summary class="summary">ピン追加方法</summary>';
+helpcontents += '<div class="details-content">';
+helpcontents +=
   "<p>1) 場所名、コンテンツ(作品名)を入力<br>2) 位置情報の含まれた画像をアップロード<br>    ※ファイル形式：jpgのみ<br>3) ピンとタグを1つずつ選ぶ<br>4) 任意で説明など備考を入力<br>5) 送信ボタンを押して追加する</p>";
-contents += "</div>";
-contents += "</details>";
+helpcontents += "</div>";
+helpcontents += "</details>";
 
-contents += '<details class="details">';
-contents += '<summary class="summary">ピンの種類</summary>';
-contents += '<div class="details-content">';
-contents += '<p class="bold"><オシキー></p>';
-contents +=
+helpcontents += '<details class="details">';
+helpcontents += '<summary class="summary">ピンの種類</summary>';
+helpcontents += '<div class="details-content">';
+helpcontents += '<p class="bold"><オシキー></p>';
+helpcontents +=
   "<p>推しグッズを飾っているなど推し活を促進している場所<br>(実質その他)</p>";
-contents +=
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/oshikey.png" alt="オシキー" /></div>';
-contents += '<p class="bold"><グッズ></p>';
-contents += "<p>アニ〇イトなどグッズを買える場所</p>";
-contents +=
+helpcontents += '<p class="bold"><グッズ></p>';
+helpcontents += "<p>アニ〇イトなどグッズを買える場所</p>";
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/goods.png" alt="グッズ" /></div>';
-contents += '<p class="bold"><聖地></p>';
-contents += "<p>巡礼場所</p>";
-contents +=
+helpcontents += '<p class="bold"><聖地></p>';
+helpcontents += "<p>巡礼場所</p>";
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/place.png" alt="聖地" /></div>';
-contents += "</div>";
-contents += "</details>";
+helpcontents += "</div>";
+helpcontents += "</details>";
 
-contents += '<details class="details">';
-contents += '<summary class="summary">タグの種類</summary>';
-contents += '<div class="details-content">';
-contents += '<p class="bold"><アニメ></p>';
-contents +=
+helpcontents += '<details class="details">';
+helpcontents += '<summary class="summary">タグの種類</summary>';
+helpcontents += '<div class="details-content">';
+helpcontents += '<p class="bold"><アニメ></p>';
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/anime.png" alt="アニメ" /></div>';
-contents += '<p class="bold"><マンガ></p>';
-contents +=
+helpcontents += '<p class="bold"><マンガ></p>';
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/manga.png" alt="" /></div>';
-contents += '<p class="bold"><小説></p>';
-contents +=
+helpcontents += '<p class="bold"><小説></p>';
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/novel.png" alt="" /></div>';
-contents += '<p class="bold"><映画></p>';
-contents +=
+helpcontents += '<p class="bold"><映画></p>';
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/film.png" alt="" /></div>';
-contents += '<p class="bold"><ドラマ></p>';
-contents +=
+helpcontents += '<p class="bold"><ドラマ></p>';
+helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/drama.png" alt="" /></div>';
-contents += '<p class="bold"><その他></p>';
-contents += "<p>音楽、有名人などはこのタグに含まれます</p>";
-contents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/other.png" alt="" /></div>';
-contents += "</div>";
-contents += "</details>";
-contents += "</div>";
+helpcontents += '<p class="bold"><その他></p>';
+helpcontents += "<p>音楽、有名人などはこのタグに含まれます</p>";
+helpcontents +=
+  '<div class="help-img-wrap"><img class="help-pin" src="../statisideimgc/ico/other.png" alt="" /></div>';
+helpcontents += "</div>";
+helpcontents += "</details>";
+helpcontents += "</div>";
 
 // SlideMenu
 var options = {
@@ -485,7 +479,57 @@ var options = {
   changeperc: "10",
   delay: 20,
 };
-L.control.slideMenu(header + contents, "helpbtn", options).addTo(map);
+L.control.slideMenu(helpheader + helpcontents, "helpbtn", options).addTo(map);
+
+var sortheader = '<h1 class="sort-header">ピンの絞り込み</h1>';
+var sortcontents =
+  '<p class="large">表示したいものを選択してください<br>未選択の場合は全てのピンが表示されます</p>';
+
+sortcontents += '<p class="bold sort-p">ピン選択</p>';
+sortcontents += '<div class="img-wrapper">';
+sortcontents +=
+  '<input id="sort-oshikey" type="checkbox" value="../static/ico/oshikey.png" name="sortPin">';
+sortcontents +=
+  '<label for="sort-oshikey"><img src="../static/ico/oshikey.png" alt="オシキー"></label>';
+sortcontents +=
+  '<input id="sort-goods" type="checkbox" value="../static/ico/goods.png" name="sortPin">';
+sortcontents +=
+  '<label for="sort-goods"><img src="../static/ico/goods.png" alt="グッズ"></label>';
+sortcontents +=
+  '<input id="sort-place" type="checkbox" value="../static/ico/place.png" name="sortPin">';
+sortcontents +=
+  '<label for="sort-place"><img src="../static/ico/place.png" alt="聖地"></label>';
+sortcontents += "</div>";
+
+sortcontents += '<p class="bold sort-p"><br>タグ選択</p>';
+sortcontents += '<div class="img-wrapper">';
+sortcontents +=
+  '<input id="sort-anime" type="checkbox" value="../static/ico/anime.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-anime"><img src="../static/ico/anime.png" alt="アニメ"></label>';
+sortcontents +=
+  '<input id="sort-manga" type="checkbox" value="../static/ico/manga.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-manga"><img src="../static/ico/manga.png" alt="漫画"></label>';
+sortcontents +=
+  '<input id="sort-novel" type="checkbox" value="../static/ico/novel.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-novel"><img src="../static/ico/novel.png" alt="小説"></label>';
+sortcontents +=
+  '<input id="sort-film" type="checkbox" value="../static/ico/film.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-film"><img src="../static/ico/film.png" alt="映画"></label>';
+sortcontents +=
+  '<input id="sort-drama" type="checkbox" value="../static/ico/drama.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-drama"><img src="../static/ico/drama.png" alt="ドラマ"></label>';
+sortcontents +=
+  '<input id="sort-other" type="checkbox" value="../static/ico/other.png" name="sortTag">';
+sortcontents +=
+  '<label for="sort-other"><img src="../static/ico/other.png" alt="その他"></label>';
+sortcontents += "</div>";
+sortcontents += '<div class="sort-release">すべての選択を解除</div>';
+L.control.slideMenu(sortheader + sortcontents, "sortbtn", options).addTo(map);
 
 //画像が入力された際に、位置情報の有無を確認する
 //function gpsCheck(input) {
