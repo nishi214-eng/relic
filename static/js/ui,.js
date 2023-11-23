@@ -77,15 +77,18 @@ circularMenuControl.onAdd = function (map) {
     opencloseSidebar1();
   };
   menuItem1.innerHTML = '<button><i class="fa-solid fa-plus"></i></button>';
+  menuItem1.id = "addpinbtn";
 
   var menuItem2 = L.DomUtil.create("a", "menu-item", itemsWrapper);
   menuItem2.onclick = function () {
     opencloseSidebar2();
   };
   menuItem2.innerHTML = '<button><i class="fa-solid fa-filter"></i></button>';
+  menuItem2.id = "sortbtn";
 
   var menuItem3 = L.DomUtil.create("a", "menu-item", itemsWrapper);
   menuItem3.innerHTML = '<button><i class="fa-solid fa-question"></i></button>';
+  menuItem3.id = "helpbtn";
 
   return this.ele;
 };
@@ -473,20 +476,16 @@ contents += "</div>";
 contents += "</details>";
 contents += "</div>";
 
-var ulElement = document.getElementsByClassName("items-wrapper")[0];
-var questionMenuBtn = ulElement.lastElementChild;
-
 // SlideMenu
 var options = {
   width: "40%",
   height: "100%",
   position: "topright",
   menuposition: "topright",
-  openid: questionMenuBtn,
   changeperc: "10",
   delay: 20,
 };
-L.control.slideMenu(header + contents, options).addTo(map);
+L.control.slideMenu(header + contents, "helpbtn", options).addTo(map);
 
 //画像が入力された際に、位置情報の有無を確認する
 //function gpsCheck(input) {

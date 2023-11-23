@@ -9,7 +9,6 @@ L.Control.SlideMenu = L.Control.extend({
     delay: "10",
     icon: "fa-solid fa-bars",
     hidden: false,
-    openid: document.getElementById("mapid"),
     icon_close: {
       class_up: "fa fa-chevron-up",
       class_down: "fa fa-chevron-down",
@@ -20,8 +19,11 @@ L.Control.SlideMenu = L.Control.extend({
     },
   },
 
-  initialize: function (innerHTML, options) {
+  initialize: function (innerHTML, btnid, options) {
     L.Util.setOptions(this, options);
+    this._button = document.getElementById(btnid);
+    console.log(btnid);
+    console.log(this._button);
     this._innerHTML = innerHTML;
     this._isLeftPosition =
       this.options.menuposition == "topleft" ||
@@ -37,11 +39,10 @@ L.Control.SlideMenu = L.Control.extend({
   },
 
   onAdd: function (map) {
-    /*
     this._container = L.DomUtil.create(
       "div",
       "leaflet-control-slidemenu leaflet-bar leaflet-control"
-    );
+    ); /*
     var link = L.DomUtil.create(
       "a",
       "leaflet-bar-part leaflet-bar-part-single",
@@ -118,7 +119,6 @@ L.Control.SlideMenu = L.Control.extend({
       this._menu
     );
     this._contents.innerHTML = this._innerHTML;
-    this._button = this.options.openid;
     this._contents.style.clear = "both";
 
     if (this._isHorizontal) {
@@ -176,9 +176,10 @@ L.Control.SlideMenu = L.Control.extend({
     delete this._menu;
   },
 
-  setContents: function (innerHTML) {
+  setContents: function (innerHTML, btnid) {
     this._innerHTML = innerHTML;
     this._contents.innerHTML = this._innerHTML;
+    this._button = document.getElementById(btnid);
   },
 
   _animate: function (menu, from, to, isOpen, ispx, unit) {
@@ -219,6 +220,6 @@ L.Control.SlideMenu = L.Control.extend({
   },
 });
 
-L.control.slideMenu = function (innerHTML, options) {
-  return new L.Control.SlideMenu(innerHTML, options);
+L.control.slideMenu = function (innerHTML, btnid, options) {
+  return new L.Control.SlideMenu(innerHTML, btnid, options);
 };
