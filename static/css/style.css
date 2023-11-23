@@ -622,3 +622,13 @@ input[type="checkbox"]:checked + label img {
   background-color: #000;
   transition: all 0.3s;
 }
+.sort-release:active {
+  transform: translateY(3px);
+  transition: all 0.3s;
+}
+.leaflet-marker-icon {
+  display: none;
+}
+.leaflet-marker-icon.js_selected {
+  display: block;
+}

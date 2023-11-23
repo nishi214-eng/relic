@@ -22,8 +22,6 @@ L.Control.SlideMenu = L.Control.extend({
   initialize: function (innerHTML, btnid, options) {
     L.Util.setOptions(this, options);
     this._button = document.getElementById(btnid);
-    console.log(btnid);
-    console.log(this._button);
     this._innerHTML = innerHTML;
     this._isLeftPosition =
       this.options.menuposition == "topleft" ||

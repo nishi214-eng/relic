@@ -452,20 +452,20 @@ helpcontents +=
   '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/anime.png" alt="アニメ" /></div>';
 helpcontents += '<p class="bold"><マンガ></p>';
 helpcontents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/manga.png" alt="" /></div>';
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/manga.png" alt="漫画" /></div>';
 helpcontents += '<p class="bold"><小説></p>';
 helpcontents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/novel.png" alt="" /></div>';
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/novel.png" alt="小説" /></div>';
 helpcontents += '<p class="bold"><映画></p>';
 helpcontents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/film.png" alt="" /></div>';
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/film.png" alt="映画" /></div>';
 helpcontents += '<p class="bold"><ドラマ></p>';
 helpcontents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/drama.png" alt="" /></div>';
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/drama.png" alt="ドラマ" /></div>';
 helpcontents += '<p class="bold"><その他></p>';
 helpcontents += "<p>音楽、有名人などはこのタグに含まれます</p>";
 helpcontents +=
-  '<div class="help-img-wrap"><img class="help-pin" src="../statisideimgc/ico/other.png" alt="" /></div>';
+  '<div class="help-img-wrap"><img class="help-pin" src="../static/ico/other.png" alt="その他" /></div>';
 helpcontents += "</div>";
 helpcontents += "</details>";
 helpcontents += "</div>";
@@ -484,9 +484,9 @@ L.control.slideMenu(helpheader + helpcontents, "helpbtn", options).addTo(map);
 var sortheader = '<h1 class="sort-header">ピンの絞り込み</h1>';
 var sortcontents =
   '<p class="large">表示したいものを選択してください<br>未選択の場合は全てのピンが表示されます</p>';
-
+sortcontents += '<div class="sort-select">';
 sortcontents += '<p class="bold sort-p">ピン選択</p>';
-sortcontents += '<div class="img-wrapper">';
+sortcontents += '<div class="img-wrapper sort-pin">';
 sortcontents +=
   '<input id="sort-oshikey" type="checkbox" value="../static/ico/oshikey.png" name="sortPin">';
 sortcontents +=
@@ -502,7 +502,7 @@ sortcontents +=
 sortcontents += "</div>";
 
 sortcontents += '<p class="bold sort-p"><br>タグ選択</p>';
-sortcontents += '<div class="img-wrapper">';
+sortcontents += '<div class="img-wrapper sort-tag">';
 sortcontents +=
   '<input id="sort-anime" type="checkbox" value="../static/ico/anime.png" name="sortTag">';
 sortcontents +=
@@ -527,6 +527,7 @@ sortcontents +=
   '<input id="sort-other" type="checkbox" value="../static/ico/other.png" name="sortTag">';
 sortcontents +=
   '<label for="sort-other"><img src="../static/ico/other.png" alt="その他"></label>';
+sortcontents += "</div>";
 sortcontents += "</div>";
 sortcontents += '<div class="sort-release">すべての選択を解除</div>';
 L.control.slideMenu(sortheader + sortcontents, "sortbtn", options).addTo(map);
