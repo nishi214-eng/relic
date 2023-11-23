@@ -1,14 +1,13 @@
+// ロゴの表示
 var titleControl = L.control({ position: "topleft" });
-
 titleControl.onAdd = function (map) {
   this.ele = L.DomUtil.create("div", "title-control");
   this.ele.id = "title";
   this.ele.className = "title-Logo";
-  this.ele.innerHTML =
-    "<img src='../static/logo/logo2.png' width='20%' height='auto' alt='title_logo'>";
+  this.ele.innerHTML = "<img src='../static/logo/logo.png' alt='title_logo'>";
+  this.ele.style.zIndex = 999;
   return this.ele;
 };
-
 titleControl.addTo(map);
 
 //検索窓
@@ -35,23 +34,9 @@ searchBar.classList.add("search-bar", "search-bar-control");
 searchFrom.id = "search-form";
 searchInput.id = "sbox";
 searchButton.id = "sbtn";
-
 let searchIco = document.createElement("i");
 searchIco.classList.add("fas", "fa-search");
 searchButton.appendChild(searchIco);
-
-/*
-var searchBarControl = new L.Control.OSMGeocoder(option);
-searchBarControl.onAdd = function (map) {
-  this.ele = L.DomUtil.create("div", "search-bar-control");
-  this.ele.id = "search-bar";
-  this.ele.classList.add("search-bar");
-  this.ele.innerHTML = "<form id='search-form' action=''><input id='sbox' type='text' placeholder='検索したいキーワードを入力' /><button id='sbtn' type='submit'><i class='fas fa-search'></i></button></form>";
-  this.ele.style.zIndex = 999;
-  return this.ele;
-};
-
-map.addControl(searchBarControl);*/
 
 //サークルメニュー
 var circularMenuControl = L.control({ position: "topright" });
@@ -73,9 +58,6 @@ circularMenuControl.onAdd = function (map) {
   var itemsWrapper = L.DomUtil.create("menu", "items-wrapper", this.ele);
 
   var menuItem1 = L.DomUtil.create("a", "menu-item", itemsWrapper);
-  menuItem1.onclick = function () {
-    opencloseSidebar1();
-  };
   menuItem1.innerHTML = '<button><i class="fa-solid fa-plus"></i></button>';
   menuItem1.id = "addpinbtn";
 
@@ -89,119 +71,103 @@ circularMenuControl.onAdd = function (map) {
 
   return this.ele;
 };
-
 circularMenuControl.addTo(map);
 
-// サイドバーコントロール
-var sidebarControl = L.control({ position: "topright" });
+/* ピン追加バー */
+var addpincontents = '<div class="wrapper">';
+addpincontents +=
+  '<form method="POST" enctype="multipart/form-data" onsubmit="return requiredRadio()">';
+addpincontents += '<p><span class="required">*</span>は必須項目です</p>';
+addpincontents += '<p>場所名 <span class="required">*</span></p>';
+addpincontents += '<div class="cp_iptxt">';
+addpincontents +=
+  '<i class="fa-solid fa-location-dot"></i><input class="sidebox" type="text" name="location" placeholder="場所名を入力してね！" />';
+addpincontents += "</div>";
+addpincontents += '<p>コンテンツ <span class="required">*</span></p>';
+addpincontents += '<div class="cp_iptxt">';
+addpincontents +=
+  '<i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />';
+addpincontents += "</div>";
+addpincontents += '<p>位置情報付きの写真 <span class="required">*</span></p>';
+addpincontents += '<div id="calculator">';
+addpincontents +=
+  '<div class="element" data-element="file_upload01" data-conditionalelement="undefined" data-conditionalelementvalue="undefined">';
+addpincontents += '<label style="color:#333333">file_upload01</label>';
+addpincontents +=
+  '<input id="fileinput" class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file" name="file" accept=".jpg">';
+addpincontents += "</div>";
+addpincontents += '<div id="uploadedFileName"></div>';
+addpincontents += "</div>";
+addpincontents += '<p>ピンの種類 <span class="required">*</span></p>';
+addpincontents += '<div class="sideimg">';
+addpincontents +=
+  '<input id="pinType1" type="radio" value="oshikey.png" name="pinType">';
+addpincontents +=
+  '<label for="pinType1"><img src="../static/ico/oshikey.png"></label>';
 
-sidebarControl.onAdd = function (map) {
-  this.ele = L.DomUtil.create("div", "sidebar-control");
-  this.ele.id = "sidebar1";
-  this.ele.className = "sidebar";
-  this.ele.style.zIndex = 1500;
-  this.ele.innerHTML = `
-    <a class="closebtn" onclick="opencloseSidebar1()">×</a>
-    <form method="POST" enctype="multipart/form-data" onsubmit="return requiredRadio()">
-    <p><span class="required">*</span>は必須項目です</p>
-    <p>場所名 <span class="required">*</span></p>
-      <div class="cp_iptxt">
-        <i class="fa-solid fa-location-dot"></i><input class="sidebox" type="text" name="location" placeholder="場所名を入力してね！" />
-      </div>
-      <p>コンテンツ <span class="required">*</span></p>
-      <div class="cp_iptxt">
-        <i class="fa-solid fa-tag"></i><input class="sidebox" type="text" name="content" placeholder="コンテンツの名前を入力してね！" />
-      </div>
-      <p>位置情報付きの写真 <span class="required">*</span></p>
-      <div id="calculator">
-        <div class="element" data-element="file_upload01" data-conditionalelement="undefined"
-          data-conditionalelementvalue="undefined"><label style="color:#333333">file_upload01</label>
-          <input id="fileinput" class="calc-prop" data-identifier="file_upload01" data-isrequired="false" type="file" name="file" accept=".jpg" onchange="gpsCheck(this)">
-        </div>
-      </div>
-      <p>ピンの種類 <span class="required">*</span></p>
-      <div class="sideimg">
-        <input id="pinType1" type="radio" value="oshikey.png" name="pinType">
-        <label for="pinType1"><img src="../static/ico/oshikey.png"></label>
-        <input id="pinType2" type="radio" value="goods.png" name="pinType">
-        <label for="pinType2"><img src="../static/ico/goods.png"></label>
-        <input id="pinType3" type="radio" value="place.png" name="pinType">
-        <label for="pinType3"><img src="../static/ico/place.png"></label>
-      </div>
-      <p>タグ <span class="required">*</span></p>
-      <div class="sideimg">
-        <input id="tagType1" type="radio" value="anime.png" name="tagType">
-        <label for="tagType1"><img src="../static/ico/anime.png" alt="アニメ"></label>
+addpincontents +=
+  '<input id="pinType2" type="radio" value="goods.png" name="pinType">';
+addpincontents +=
+  '<label for="pinType2"><img src="../static/ico/goods.png"></label>';
 
-        <input id="tagType2" type="radio" value="manga.png" name="tagType">
-        <label for="tagType2"><img src="../static/ico/manga.png" alt="漫画"></label>
+addpincontents +=
+  '<input id="pinType3" type="radio" value="place.png" name="pinType">';
+addpincontents +=
+  '<label for="pinType3"><img src="../static/ico/place.png"></label>';
+addpincontents += "</div>";
 
-        <input id="tagType3" type="radio" value="novel.png" name="tagType">
-        <label for="tagType3"><img src="../static/ico/novel.png" alt="小説"></label>
+addpincontents += '<p>タグ <span class="required">*</span></p>';
+addpincontents += '<div class="sideimg">';
+addpincontents +=
+  '<input id="tagType1" type="radio" value="anime.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType1"><img src="../static/ico/anime.png" alt="アニメ"></label>';
 
-        <input id="tagType4" type="radio" value="film.png" name="tagType">
-        <label for="tagType4"><img src="../static/ico/film.png" alt="映画"></label>
+addpincontents +=
+  '<input id="tagType2" type="radio" value="manga.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType2"><img src="../static/ico/manga.png" alt="漫画"></label>';
 
-        <input id="tagType5" type="radio" value="drama.png" name="tagType">
-        <label for="tagType5"><img src="../static/ico/drama.png" alt="ドラマ"></label>
+addpincontents +=
+  '<input id="tagType3" type="radio" value="novel.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType3"><img src="../static/ico/novel.png" alt="小説"></label>';
 
-        <input id="tagType6" type="radio" value="other.png" name="tagType">
-        <label for="tagType6"><img src="../static/ico/other.png" alt="その他"></label>
+addpincontents +=
+  '<input id="tagType4" type="radio" value="film.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType4"><img src="../static/ico/film.png" alt="映画"></label>';
 
-      </div>
-      <div class="remarks">
-        <p>備考</p>
-        <textarea type="text" name="remarks" placeholder="例：3月末に撤去予定です"></textarea>
-        <input type="submit" value="送信">
-      </div>
-    </form>`;
+addpincontents +=
+  '<input id="tagType5" type="radio" value="drama.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType5"><img src="../static/ico/drama.png" alt="ドラマ"></label>';
 
-  return this.ele;
+addpincontents +=
+  '<input id="tagType6" type="radio" value="other.png" name="tagType">';
+addpincontents +=
+  '<label for="tagType6"><img src="../static/ico/other.png" alt="その他"></label>';
+addpincontents += "</div>";
+
+addpincontents += '<div class="remarks">';
+addpincontents += "<p>備考</p>";
+addpincontents +=
+  '<textarea type="text" name="remarks" placeholder="例：3月末に撤去予定です"></textarea>';
+addpincontents += '<input type="submit" value="送信">';
+addpincontents += "</div>";
+addpincontents += "</form>";
+addpincontents += "</div>";
+
+var options = {
+  height: "100%",
+  position: "topright",
+  menuposition: "topright",
+  changeperc: "10",
+  delay: 20,
 };
+L.control.slideMenu(addpincontents, "addpinbtn", options).addTo(map);
 
-sidebarControl.addTo(map);
-
-// 絞り込みサイドバーコントロール
-/*
-var filterSidebarControl = L.control({ position: "topright" });
-
-filterSidebarControl.onAdd = function (map) {
-  this.ele = L.DomUtil.create("div", "filter-sidebar-control");
-  this.ele.id = "sidebar2";
-  this.ele.className = "sidebar";
-  this.ele.innerHTML = `
-    <a class="closebtn" onclick="opencloseSidebar2()">×</a>
-    <p>ピンの種類</p>
-    <div class="sideimg">
-      <img src="../static/ico/test.png" alt="オシキー" />
-      <img src="../static/ico/test.png" alt="グッズ" />
-      <img src="../static/ico/test.png" alt="聖地" />
-    </div>
-    <p>タグ（複数選択可）</p>
-    <div class="sideimg">
-      <img src="../static/ico/test.png" alt="アニメ" />
-      <img src="../static/ico/test.png" alt="漫画" />
-      <img src="../static/ico/test.png" alt="小説" />
-      <img src="../static/ico/test.png" alt="映画" />
-      <img src="../static/ico/test.png" alt="ドラマ" />
-      <img src="../static/ico/test.png" alt="その他" />
-    </div>
-    <div class="remarks">
-      <img src="../static/ico/test.png" alt="絞り込み" />
-    </div>`;
-
-  this.ele.style.zIndex = 1501;
-
-  return this.ele;
-};
-
-filterSidebarControl.addTo(map);*/
-
-//以下関数
-function opencloseSidebar1() {
-  $("#sidebar1").slideToggle("");
-}
-
+// ファイル
 $(function () {
   $("#calculator .element input[type=number]").change(function () {
     if ($("#calculator .element input[type=number]").val() == 0) {
@@ -220,12 +186,10 @@ function bytesToSize(bytes) {
 }
 
 $("input").change(function () {
-  if ($(this).attr("id") != "sbox") {
-    var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
-    var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
-    $("#fileName01").html(file01.name + " (" + bytesToSize(file01.size) + ")");
-    $("#fileName02").html(file02.name + " (" + bytesToSize(file02.size) + ")");
-  }
+  var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
+  var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
+  $("#fileName01").html(file01.name + " (" + bytesToSize(file01.size) + ")");
+  $("#fileName02").html(file02.name + " (" + bytesToSize(file02.size) + ")");
 });
 
 //サイドバーの各要素を選択必須にする
@@ -302,9 +266,15 @@ function requiredRadio() {
 
   return true;
 }
+//ファイル名を保存
+document.getElementById("fileinput").addEventListener("change", function () {
+  var uploadedFileNameElement = document.getElementById("uploadedFileName");
+  var fileName = this.files[0].name;
+  uploadedFileNameElement.textContent = "ファイル名: " + fileName;
+});
 
-// ヘルプ
-
+/* ヘルプバー */
+// 開閉アニメーション
 const ANIMATION_TIME = 300;
 const OFFSET_TIME = 20;
 
@@ -325,67 +295,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // オープン処理
       if (!accordion.open) {
-        isAnimating = true; // アニメーション中（オープン時のみでも安定する）
-        accordion.open = true; // コンテンツの高さを取得するためopen属性をセット
-
+        isAnimating = true;
+        accordion.open = true;
         const contentHeight = content.offsetHeight;
-
-        // コンテンツの高さを0に設定して非表示にする
         content.style.maxHeight = 0;
 
-        // オフセット時間後にアニメーションを開始
         setTimeout(() => {
-          content.style.maxHeight = `${contentHeight}px`; // コンテンツの高さを元の高さに設定して表示する
-          accordion.classList.add("is-open"); // オープン状態のクラスを追加
+          content.style.maxHeight = `${contentHeight}px`;
+          accordion.classList.add("is-open");
 
           // アニメーション完了後にリセット
           setTimeout(() => {
             content.removeAttribute("style");
-            isAnimating = false; // アニメーション解除
+            isAnimating = false;
           }, ANIMATION_TIME);
         }, OFFSET_TIME);
 
         // クローズ処理
       } else if (accordion.open) {
         const contentHeight = content.offsetHeight;
-
-        // コンテンツの高さを元の高さに設定して表示する
         content.style.maxHeight = `${contentHeight}px`;
-
-        // オフセット時間後にアニメーションを開始
         setTimeout(() => {
-          content.style.maxHeight = 0; // コンテンツの高さを0に設定して非表示にする
+          content.style.maxHeight = 0;
           accordion.classList.remove("is-open");
 
           // アニメーション完了後にリセット
           setTimeout(() => {
             content.removeAttribute("style");
-            accordion.open = false; // open属性を削除
+            accordion.open = false;
           }, ANIMATION_TIME);
         }, OFFSET_TIME);
       }
     });
 
-    // open属性とis-openクラスを同期させるための関数
+    // open属性とis-openクラスを同期
     function syncOpenState() {
       const hasOpenClass = accordion.classList.contains("is-open");
-
       if (accordion.open && !hasOpenClass) {
-        // open がセット is-open がない時
         accordion.classList.add("is-open");
       } else if (!accordion.open && hasOpenClass) {
-        // open が削除 is-open がある時
         accordion.classList.remove("is-open");
       }
     }
 
-    // 初期状態でオープン状態を同期する（クラスのつけ忘れ防止）
+    // 初期状態でオープン状態を同期
     syncOpenState();
-
-    // ページ内検索で自動開閉した際に同期する
+    // ページ内検索で自動開閉した際に同期
     accordion.addEventListener("toggle", () => {
       setTimeout(() => {
-        // クリックした場合にもこのイベントが発生するためクリック時と同様オフセット時間後にオープン状態を同期する
         syncOpenState();
       }, OFFSET_TIME);
     });
@@ -393,7 +350,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 var helpheader = '<h1 class="help-header">ヘルプ</h1>';
-
 var helpcontents = '<div class="wrapper">';
 helpcontents += '<details class="details">';
 helpcontents += '<summary class="summary">地図の操作方法</summary>';
@@ -481,6 +437,7 @@ var options = {
 };
 L.control.slideMenu(helpheader + helpcontents, "helpbtn", options).addTo(map);
 
+/* 絞り込みバー */
 var sortheader = '<h1 class="sort-header">ピンの絞り込み</h1>';
 var sortcontents =
   '<p class="large">表示したいものを選択してください<br>未選択の場合は全てのピンが表示されます</p>';
@@ -531,23 +488,3 @@ sortcontents += "</div>";
 sortcontents += "</div>";
 sortcontents += '<div class="sort-release">すべての選択を解除</div>';
 L.control.slideMenu(sortheader + sortcontents, "sortbtn", options).addTo(map);
-
-//画像が入力された際に、位置情報の有無を確認する
-//function gpsCheck(input) {
-// 位置情報の取得
-//var file = input.files[0];
-//var reader = new FileReader();
-
-//reader.onload = function (e) {
-//var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
-//var hasLocationInfo = exif && exif.GPSLatitude && exif.GPSLongitude;
-
-//if (!hasLocationInfo) {
-//swal({
-//title: "画像に位置情報がありません！",
-//icon: "error",
-//button: "OK",
-//});
-//}
-//};
-//}

@@ -1,6 +1,8 @@
 var map = L.map("mapid", {
-  center: [35.66572, 139.731],
-  zoom: 17,
+  center: [34.226111, 135.1675],
+  zoom: 15,
+  minZoom: 3,
+  maxZoom: 17,
   scrollWheelZoom: false,
   smoothWheelZoom: true,
   smoothSensitivity: 1,
@@ -20,14 +22,12 @@ tileLayer.addTo(map);
 L.control.scale().addTo(map);
 
 var features = [];
-
 var place = [];
 
-//alert(POSES[0]["lat"])
 for (var i = 0; i < POSES.length; i++) {
   place.push({ lat: String(POSES[i]["lat"]), long: String(POSES[i]["long"]) });
 }
-//アイコンを
+//アイコン追加
 var PincIco = L.icon({
   iconUrl: "../static/ico/${selectedPinType}.png",
   iconRetinaUrl: "../static/ico/${selectedPinType}.png",
@@ -42,7 +42,6 @@ for (var i = 0; i < place.length; i++) {
     type: "Feature",
     properties: {
       icon: getPinIcon(POSES[i]["pinType"], POSES[i]["tagType"]),
-      //"name": place[i].name
     },
     geometry: {
       type: "Point",
@@ -58,8 +57,8 @@ function getPinIcon(pinType, tagType) {
       iconUrl: "../static/ico/oshikey.png",
       iconRetinaUrl: "../static/ico/oshikey.png",
       iconSize: [73.7, 135],
-      iconAnchor: [36.85, 135],
-      popupAnchor: [0, -150],
+      iconAnchor: [36.85, 120],
+      popupAnchor: [0, -70],
       className: tagType,
     });
   } else if (pinType === "goods.png") {
@@ -67,8 +66,8 @@ function getPinIcon(pinType, tagType) {
       iconUrl: "../static/ico/goods.png",
       iconRetinaUrl: "../static/ico/goods.png",
       iconSize: [73.7, 135],
-      iconAnchor: [36.85, 135],
-      popupAnchor: [0, -150],
+      iconAnchor: [36.85, 120],
+      popupAnchor: [0, -70],
       className: tagType,
     });
   } else if (pinType === "place.png") {
@@ -76,8 +75,8 @@ function getPinIcon(pinType, tagType) {
       iconUrl: "../static/ico/place.png",
       iconRetinaUrl: "../static/ico/place.png",
       iconSize: [73.7, 135],
-      iconAnchor: [36.85, 135],
-      popupAnchor: [0, -150],
+      iconAnchor: [36.85, 120],
+      popupAnchor: [0, -70],
       className: tagType,
     });
   }
@@ -85,28 +84,46 @@ function getPinIcon(pinType, tagType) {
 
 L.geoJson(features, {
   onEachFeature: function (features, layer) {
-    if (features.properties && features.properties.name) {
-      layer.bindPopup(features.properties.name);
-      layer.on("mouseover", function (e) {
-        this.openPopup();
-      });
-      layer.on("mouseout", function (e) {
-        this.closePopup();
-      });
-      layer.on("click", function (e) {
-        alert("ここにゴミ捨てるの?");
-      });
-    }
+    layer.bindPopup(function () {
+      var poseInfo = POSES.find(
+        (p) =>
+          p.lat === parseFloat(features.geometry.coordinates[1]) &&
+          p.long === parseFloat(features.geometry.coordinates[0])
+      );
+      if (poseInfo.remarks == "" || poseInfo.remarks == null) {
+        poseInfo.remarks = "なし";
+      }
+      // 画像を表示するHTML要素を作成
+      var uploadedimage =
+        '<img src="../static/img/' +
+        poseInfo.filename +
+        '" alt="アップロード画像" style="width: 50%; height: auto;">';
+      var tagimage =
+        '<img class="tagimg" src="../static/ico/' +
+        poseInfo.tagType +
+        '" alt="タグ" style="width: 50%; height: auto;">';
+
+      return (
+        uploadedimage +
+        tagimage +
+        "<br>" +
+        '<p class="br">場所名:' +
+        poseInfo.location +
+        "<br>" +
+        "コンテンツ:" +
+        poseInfo.content +
+        "<br>" +
+        "備考:" +
+        poseInfo.remarks +
+        "</p>"
+      );
+    });
   },
   // アイコンの指定があれば指定したアイコンを設置する
-
   pointToLayer: function (feature, latlng) {
-    // アイコンの指定があれば指定したアイコンを設置する
     if (feature.properties.icon) {
-      //alert(1) 1があるためアイコンが指定はされている。
       return L.marker(latlng, { icon: feature.properties.icon });
     } else {
-      //alert(2)
       return L.marker(latlng);
     }
   },

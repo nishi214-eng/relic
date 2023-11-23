@@ -9,50 +9,52 @@ body {
   margin: 0;
   font-family: "MyFont", sans-serif;
 }
-
+/* 地図 */
 #mapid {
   height: 100%;
 }
 
-h1:after {
-  position: absolute;
-  content: "";
-  left: -7px;
-  top: -7px;
-  border-width: 0 0 15px 15px;
-  border-style: solid;
-  border-color: #fff #fff #ffffff00;
-  box-shadow: 1px 1px 1px rqba(0, 0, 0, 0.15);
+/* ポップアップ */
+.leaflet-popup-content {
+  font-size: 15px;
+  font-family: "MyFont", sans-serif;
 }
 
-table {
-  background-color: #cdefff;
-  /* 背景色指定 */
+.br {
+  clear: both;
 }
 
-th {
-  background-color: #00e2cf;
-  /* 背景色指定 */
+.leaflet-popup-content img {
+  float: left;
 }
 
-body {
-  background-color: #ededed;
+.leaflet-popup-content p {
   margin: 0;
-  font-family: MyFont;
 }
 
+/* ファイル名表示 */
+#uploadedFileName {
+  margin-left: 10%;
+}
+/* ロゴ */
 #title {
   float: left;
   position: fixed;
   top: 1%;
-  left: 1%;
+  left: 4%;
 }
 
+#title img {
+  width: 22%;
+  height: auto;
+}
+
+/* 検索窓 */
 #search-bar {
   position: fixed;
   top: 3%;
-  left: 20%;
-  width: 60%;
+  left: 25%;
+  width: 50%;
   padding: 1em;
   float: left;
   text-align: center;
@@ -74,6 +76,7 @@ body {
   border-radius: 10px;
   border: 2px solid rgb(0, 0, 0);
   resize: none;
+  box-shadow: 2px 2px 4px gray;
 }
 
 #sbtn {
@@ -83,23 +86,26 @@ body {
   float: left;
   margin-left: 5px;
   top: 0;
-  background: #7fbfff;
+  background: #000000;
   color: #fff;
   font-weight: bold;
   font-size: 16px;
   border: none;
   border-radius: 10px;
+  box-shadow: 2px 2px 4px gray;
 }
 
-#sbtn:hover {
+#sbtn:hover,
+#sbtn:focus {
   background: #eee;
-  color: #7fbfff;
+  color: #000000;
 }
 
+/* メニューボタン */
 .circular-menu {
   position: fixed;
-  top: 1em;
-  right: 1em;
+  top: 4%;
+  right: 3%;
   float: left;
 }
 
@@ -112,7 +118,7 @@ body {
   border: none;
   border-radius: 50%;
   background-color: hsl(0, 0%, 100%);
-  box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+  box-shadow: 2px 2px 4px gray;
   color: hsl(0, 0%, 0%);
   text-align: center;
   cursor: pointer;
@@ -134,6 +140,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  box-shadow: 2px 2px 4px gray;
 }
 
 .circular-menu button:hover {
@@ -196,53 +203,27 @@ body {
   transform: translate3d(-7em, 3.2em, 0);
 }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 500px;
-  display: none;
-  width: 400px;
-  background-color: #ffffff;
-  overflow-x: hidden;
-  padding-bottom: 60px;
-  transition: width 0.5s;
-  border-radius: 5%;
-}
-
-.sidebar a:hover {
+/* ピン追加バー */
+/* 全体 */
+.wrapper a:hover,
+.wrapper a:focus {
   opacity: 0.7;
 }
 
-.sidebar .closebtn {
-  float: left;
-  margin-top: 5%;
-  font-size: 45px;
-  margin-left: 80%;
-  width: 100%;
-}
-
-.sidebar p {
+.wrapper p {
   float: left;
   font-size: 25px;
-  width: 80%;
+  width: 90%;
   margin-left: 10%;
   color: rgb(37, 37, 37);
   font-family: "MyFont", sans-serif;
 }
 
-.sidebar .required {
+.wrapper .required {
   color: red;
 }
 
-/*.sidebar i{
-    float: left;
-    width: 20%;
-    height: auto;
-    margin-left: 10%;
-    color: aqua;
-  }*/
-.sidebar .sideimg {
+.wrapper .sideimg {
   display: flex;
   flex-wrap: wrap;
   float: left;
@@ -251,13 +232,13 @@ body {
   margin-left: 10%;
 }
 
-.sidebar .sideimg label {
+.wrapper .sideimg label {
   width: calc(33.33% - 8px);
   /* 10pxは間隔として適切な値に調整してください */
   margin-bottom: 10px;
 }
 
-.sidebar .sideimg img {
+.wrapper .sideimg img {
   width: 100%;
   height: auto;
 }
@@ -266,25 +247,23 @@ body {
 input[type="radio"] {
   display: none;
 }
-
 /* 未選択の場合、色を薄くする */
 input[type="radio"] + label img {
   opacity: 0.2;
 }
-
 /* 選択済みの場合、色を濃くする */
 input[type="radio"]:checked + label img {
   opacity: 1;
 }
-
+/*備考・送信*/
 #remarks {
-  margin-bottom: 10px;
+  margin-bottom: 300px;
 }
 
 .remarks textarea {
   margin-left: 10%;
   float: left;
-  width: 80%;
+  width: 76%;
   height: 20%;
   background: #ffffff;
   border: 2px solid rgb(0, 0, 0);
@@ -295,13 +274,27 @@ input[type="radio"]:checked + label img {
   resize: none;
 }
 
-.remarks img {
-  border-radius: 50%;
-  width: 50%;
-  margin-left: 25%;
-  margin-bottom: 8%;
+.remarks input {
+  float: left;
+  text-align: center;
+  font-size: 25px;
+  text-decoration: none;
+  margin-left: 10%;
+  border-radius: 5px;
+  width: 80%;
+  padding: 1rem 4rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #000000;
+  margin-bottom: 20px;
+  transition: 0.5s;
 }
 
+.remarks input:hover {
+  color: #020202;
+  background: #ffffff;
+}
+/* 場所など入力 */
 .cp_iptxt {
   width: 80%;
   margin-left: 10%;
@@ -345,6 +338,7 @@ input[type="radio"]:checked + label img {
   border-color: #000000;
 }
 
+/* 画像アップロード */
 #calculator .element {
   padding: 3px 20px;
   box-sizing: border-box;
@@ -423,10 +417,6 @@ textarea.calc-prop[name="file"] {
   font-weight: bold;
 }
 
-.element[data-element="file_format"] {
-  margin: 10px 20px;
-}
-
 .element[data-element="file_upload01"],
 .element[data-element="file_upload02"] {
   position: relative;
@@ -435,7 +425,6 @@ textarea.calc-prop[name="file"] {
 .element[data-element="file_format"] {
   border: 1px solid #adadad;
   padding: 0 20px 20px !important;
-  margin: 20px;
   width: calc(100% - 40px) !important;
 }
 
@@ -446,11 +435,43 @@ textarea.calc-prop[name="file"] {
 
 input#fileinput.calc-prop[name="file"],
 input#fileinput.calc-prop[name="file"] {
-  position: absolute;
   opacity: 0;
   cursor: pointer;
   left: 0;
-  letter-spacing: 22px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 600px) {
+  #search-bar {
+    top: 3%;
+    left: 5%;
+  }
+
+  #title img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #title img {
+    width: 200px;
+    height: auto;
+    margin-top: 8%;
+  }
+
+  #search-bar {
+    position: fixed;
+    top: 85%;
+    left: 5%;
+    width: 65%;
+    padding: 1em;
+    float: left;
+    text-align: center;
+  }
+
+  .wrapper {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 1024px) {
