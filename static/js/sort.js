@@ -38,7 +38,6 @@ $(function () {
 
       for (var n = 0; n < findConditions.length; n++) {
         //inputごとの処理
-
         //inputの選択合計数が０でなかったら処理を続行
         if (checktotal !== 0) {
           if (findConditions[n].checked) {
@@ -49,12 +48,6 @@ $(function () {
             condition[currentType][findConditions[n].value] = false;
           }
           if (findConditions.length === n + 1) {
-            //ループが最後の場合
-            if (checkcount === 0) {
-              for (var t = 0; t < findConditions.length; t++) {
-                condition[currentType][findConditions[t].value] = true;
-              }
-            }
             checkcount = 0;
           }
         } else {
@@ -62,9 +55,6 @@ $(function () {
         }
       }
     }
-    console.log(checktotal);
-
-    checktotal = 0;
 
     for (var m = 0, len = box.length; m < len; ++m) {
       //最初に取得したターゲットの情報と、現在のinputの選択状態を比較して処理を行う
@@ -83,11 +73,6 @@ $(function () {
           });
         var pinKey = condition["sort-pin"];
         var tagKey = condition["sort-tag"];
-
-        console.log("currentPin: " + currentBoxPin);
-        console.log("currentTag: " + currentBoxTag);
-        console.log(pinKey);
-        console.log(pinKey[currentBoxPin]);
         if (pinKey[currentBoxPin] || tagKey[currentBoxTag]) {
           data_check++;
           break;
@@ -96,13 +81,14 @@ $(function () {
 
       if (data_check >= 1) {
         $(box[m]).addClass("js_selected");
-      } else if (checktotal == 0) {
+      } else if (checktotal === 0) {
         $(box[m]).addClass("js_selected");
       } else {
         $(box[m]).removeClass("js_selected");
       }
       data_check = 0;
     }
+    checktotal = 0;
   }
 
   setConditions();
