@@ -120,4 +120,4 @@ def upload_file():
 
 
 Upload_File = 0
-app.run(port=5000, debug=True)
+app.run()
