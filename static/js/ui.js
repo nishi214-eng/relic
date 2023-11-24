@@ -185,7 +185,7 @@ function bytesToSize(bytes) {
   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-$("input").change(function () {
+$("#fileinput").change(function () {
   var file01 = $('#fileinput[data-identifier="file_upload01"]')[0].files[0];
   var file02 = $('#fileinput[data-identifier="file_upload02"]')[0].files[0];
   $("#fileName01").html(file01.name + " (" + bytesToSize(file01.size) + ")");
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 var helpheader = '<h1 class="help-header">ヘルプ</h1>';
-var helpcontents = '<div class="wrapper">';
+var helpcontents = '<div class="help-wrapper">';
 helpcontents += '<details class="details">';
 helpcontents += '<summary class="summary">地図の操作方法</summary>';
 helpcontents += '<div class="details-content">';
