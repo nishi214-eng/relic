@@ -23,7 +23,7 @@
 ## 公開サイトURL
 未公開
 
-# 使用技術
+## 使用技術
 - HTML5
 - CSS
 - JavaScript
@@ -34,7 +34,7 @@
 - SlideMenu
 - SmoothZoom
 
-# 対応環境
+## 対応環境
 Chrome(ver.117.0.5938.92)
 
 ## 注意事項
