@@ -62,6 +62,7 @@ $(function () {
         }
       }
     }
+    console.log(checktotal);
 
     checktotal = 0;
 
@@ -83,15 +84,22 @@ $(function () {
         var pinKey = condition["sort-pin"];
         var tagKey = condition["sort-tag"];
 
-        if (pinKey.includes(currentBoxPin) || tagKey.includes(currentBoxTag)) {
+        console.log("currentPin: " + currentBoxPin);
+        console.log("currentTag: " + currentBoxTag);
+        console.log(pinKey);
+        console.log(pinKey[currentBoxPin]);
+        if (pinKey[currentBoxPin] || tagKey[currentBoxTag]) {
           data_check++;
           break;
         }
       }
 
       if (data_check >= 1) {
-        count++;
         $(box[m]).addClass("js_selected");
+      } else if (checktotal == 0) {
+        $(box[m]).addClass("js_selected");
+      } else {
+        $(box[m]).removeClass("js_selected");
       }
       data_check = 0;
     }
