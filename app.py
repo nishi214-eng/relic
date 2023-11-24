@@ -39,6 +39,11 @@ check = 0
 def get_check_status():
     global check
     return jsonify({'check': check})
+@app.route('/reset_check_status', methods=['GET', 'POST'])
+def reset_check_status():
+    global check
+    check = 0
+    return jsonify({'check': check})
 
 # アップロードしたファイルから取得した情報を渡すAPI
 @app.route('/', methods=['GET', 'POST'])
@@ -97,6 +102,7 @@ def upload_file():
 
                 for row in DB_Poses:
                     Poses.append({'lat': row[0], 'long': row[1],'location': row[2], 'content': row[3],'pinType': row[4], 'tagType': row[5],'remarks': row[6],'filename': row[7], 'address': row[8]})
+                    check = 0
 
             except ValueError as e:
                 flash(str(e), "error")
