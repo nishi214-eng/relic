@@ -9,6 +9,10 @@ body {
   margin: 0;
   font-family: "MyFont", sans-serif;
 }
+/* スマホで入力フォームが拡大される問題の対策 */
+input {
+  font-size: 16px;
+}
 /* 地図 */
 #mapid {
   height: 100%;
@@ -466,7 +470,7 @@ input#fileinput.calc-prop[name="file"] {
 
   #search-bar {
     position: fixed;
-    top: 85%;
+    top: 82%;
     left: 5%;
     width: 65%;
     padding: 1em;
