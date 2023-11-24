@@ -1,8 +1,12 @@
 var map = L.map("mapid", {
   center: [34.226111, 135.1675],
   zoom: 15,
-  minZoom: 3,
+  minZoom: 5,
   maxZoom: 17,
+  maxBounds: [
+    [-85, -175],
+    [85, 175],
+  ],
   scrollWheelZoom: false,
   smoothWheelZoom: true,
   smoothSensitivity: 1,
