@@ -383,7 +383,8 @@ helpcontents += '<p class="bold"><ピンの追加></p>';
 helpcontents +=
   "<p>1) ハンバーガーメニューを押す<br>2) ＋ボタンを押す<br>3) 内容を入力して送信<br>詳細は「ピン追加方法」にあります</p>";
 helpcontents += '<p class="bold"><絞り込み></p>';
-helpcontents += "<p>※リリース版限定機能です！</p>";
+helpcontents +=
+  "<p>1) 絞り込みタブを開く<br>2) 表示したいピンとタグを選択<br>・1つでも一致していれば表示されます<br>・全て未選択の場合は全てのピンが表示されます</p>";
 helpcontents += "</div>";
 helpcontents += "</details>";
 
