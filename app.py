@@ -1,13 +1,12 @@
 import os
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template, jsonify
-import flask_cors
 from werkzeug.utils import secure_filename
 import gps_info
 import sqlite3
 
 UPLOAD_FOLDER = './static/img'
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
-DATABESE = 'database.db' #定数化
+DATABASE = 'database.db' #定数化
 
 #app = Flask(__name__, static_folder='.', static_url_path='')
 app = Flask(__name__)
@@ -20,7 +19,7 @@ def allowed_file(filename):
 
 #データベース
 def create_books_table():
-    con = sqlite3.connect(DATABESE) #引数は、データベースの名前
+    con = sqlite3.connect(DATABASE) #引数は、データベースの名前
     #conは、データベースへ接続するためのオブジェクト(コネクションオブジェクト)
 
     #エラーにならないように IF NOT EXIST を記述する
@@ -52,7 +51,7 @@ def upload_file():
 
     # テーブルを作成
     create_books_table()
-    con = sqlite3.connect(DATABESE)
+    con = sqlite3.connect(DATABASE)
     DB_Poses = con.execute('SELECT * FROM Poses').fetchall()
     con.close()
 
@@ -92,7 +91,7 @@ def upload_file():
 
                 address = gps_info.search_address("dj00aiZpPWhNeTlXMkwwTVFodCZzPWNvbnN1bWVyc2VjcmV0Jng9OWM-", Latitude,Longtitude)
 
-                con = sqlite3.connect(DATABESE)
+                con = sqlite3.connect(DATABASE)
                 con.execute('INSERT INTO Poses VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
                             [Long, Lat, location, content, pinType, tagType, remarks, filename, address])
                 con.commit()
