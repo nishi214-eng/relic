@@ -440,6 +440,9 @@ input#fileinput.calc-prop[name="file"] {
   opacity: 0;
   cursor: pointer;
   left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 /* レスポンシブ対応 */

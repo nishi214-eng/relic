@@ -81,7 +81,6 @@ function getPinIcon(pinType, tagType) {
     });
   }
 }
-
 L.geoJson(features, {
   onEachFeature: function (features, layer) {
     layer.bindPopup(function () {
@@ -90,9 +89,7 @@ L.geoJson(features, {
           p.lat === parseFloat(features.geometry.coordinates[1]) &&
           p.long === parseFloat(features.geometry.coordinates[0])
       );
-      if (poseInfo.remarks == "" || poseInfo.remarks == null) {
-        poseInfo.remarks = "なし";
-      }
+
       // 画像を表示するHTML要素を作成
       var uploadedimage =
         '<img src="../static/img/' +
@@ -103,9 +100,15 @@ L.geoJson(features, {
         poseInfo.tagType +
         '" alt="タグ" style="width: 50%; height: auto;">';
 
+      // 備考が空または空白文字だけの場合は「無し」を表示
+      var remarks = poseInfo.remarks.trim() || "無し";
+
       return (
         uploadedimage +
         tagimage +
+        "<br>" +
+        '<p class="br">住所:' +
+        poseInfo.address +
         "<br>" +
         '<p class="br">場所名:' +
         poseInfo.location +
@@ -114,12 +117,11 @@ L.geoJson(features, {
         poseInfo.content +
         "<br>" +
         "備考:" +
-        poseInfo.remarks +
+        remarks +
         "</p>"
       );
     });
   },
-  // アイコンの指定があれば指定したアイコンを設置する
   pointToLayer: function (feature, latlng) {
     if (feature.properties.icon) {
       return L.marker(latlng, { icon: feature.properties.icon });

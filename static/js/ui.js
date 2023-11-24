@@ -273,6 +273,20 @@ document.getElementById("fileinput").addEventListener("change", function () {
   uploadedFileNameElement.textContent = "ファイル名: " + fileName;
 });
 
+fetch("/get_check_status")
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.check === 1) {
+      swal({
+        title: "画像に位置情報がないよ！",
+        icon: "error",
+        button: "OK",
+      });
+      // サーバー側で状態をリセット
+      fetch("/reset_check_status");
+    }
+  });
+
 /* ヘルプバー */
 // 開閉アニメーション
 const ANIMATION_TIME = 300;

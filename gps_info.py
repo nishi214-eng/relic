@@ -1,5 +1,6 @@
 from PIL import Image
 import PIL.ExifTags as ExifTags
+import requests
 
 def get_gps(fname):
     try:
@@ -41,10 +42,20 @@ def get_gps(fname):
     except (AttributeError, KeyError, IndexError):
         # 位置情報がない場合
         raise ValueError("選択された画像には位置情報がありません。別の画像を選択してください。")
+    
+# Yahoo!apiで逆ジオコーディングを行う
+def search_address(api_key, longitude, latitude):
+    yahoourl = "https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder"
+    params = {
+        "appid": api_key,
+        "output": "json",
+        "lon": longitude,
+        "lat": latitude,
+    }
+    response = requests.get(yahoourl, params=params)
+    data = response.json()
 
-if __name__ == "__main__":
-    try:
-        lat, lon = get_gps("./img/IMG_6269.jpg")
-        print(lat, lon)
-    except:
-        print("No GPS info")
+    if "Feature" in data and data["Feature"]:
+        return data["Feature"][0]["Property"]["Address"]
+    else:
+        return "住所不明！"
