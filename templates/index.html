@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block main %}
+<div id="mapid"></div>
+<script type="text/javascript">
+  var tf = {{ Up | tojson }}; //グローバル変数として定義する。
+  var POSES = {{ poses | tojson }}
+  var LonTxt = document.getElementById("lon")
+</script>
+<link rel="stylesheet" href="../static/css/L.Control.SlideMenu.css" />
+<script src="../static/js/L.Control.SlideMenu.js"></script>
+<script src="../static/js/SmoothWheelZoom.js"></script>
+<script src="../static/js/map.js"></script>
+<script src="../static/js/sort.js"></script>
+<script src="../static/js/ui.js"></script>
+
+<p id="lat"></p>
+<p id="lon"></p>
+{% endblock %}
