@@ -27,12 +27,15 @@
 - HTML5
 - CSS
 - JavaScript
+- Python
 - JQuery
 - Flask
-- Python
 - Leaflet
 - SlideMenu
 - SmoothZoom
+
+# 対応環境
+Chrome(ver.117.0.5938.92)
 
 ## 注意事項
  - 本ツールの公序良俗に反する使用を禁止します。
